@@ -1,3 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">sellpicture</string>
+    <string name="app_name">Picture Shop</string>
+    <string name="welcome_message">Welcome to Picture Shop</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="cart">Cart</string>
+    <string name="order">Order</string>
 </resources>
