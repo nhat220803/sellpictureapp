@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sellpicture"
+    namespace = "com.example.tranh"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.sellpicture"
-        minSdk = 34
+        applicationId = "com.example.tranh"
+        minSdk = 27
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -40,5 +40,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation (libs.mysql.connector.java)
+    implementation(libs.mysql.connector.java)
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
 }
+
