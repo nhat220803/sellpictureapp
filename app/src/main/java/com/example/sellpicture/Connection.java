@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class Connection {
     // Thông tin kết nối
-    private static final String db = "sellpicture";
+    private static final String db = "pictureshop";
     private static final String user = "root";
     private static final String pass = "Nhatcurry22.";
     private static final String ip = "10.0.2.2";
@@ -30,4 +30,3 @@ public class Connection {
         return conn;
     }
 }
-
