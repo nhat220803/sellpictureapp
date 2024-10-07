@@ -1,5 +1,6 @@
 package com.example.sellpicture;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+//        finish();
         setContentView(R.layout.activity_main);
 
         txtResult = findViewById(R.id.textView);
@@ -41,10 +45,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 java.sql.Connection conn = connectionClass.CONN(); // Kết nối tới database
                 if (conn != null) {
-                    // Gọi hàm hiển thị thông báo kết nối thành công
                     showToastMessage("Kết nối thành công");
                 } else {
-                    // Gọi hàm hiển thị thông báo không thể kết nối
                     showToastMessage("Không thể kết nối tới database");
                 }
             } catch (Exception e) {
@@ -63,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
     private void updateUIWithResult(String result) {
         runOnUiThread(() -> txtResult.setText(result));
     }
+
+
+
 
 
 
