@@ -8,9 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tranh.R;
-
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -50,7 +47,7 @@ public class ProductList extends AppCompatActivity {
                             productList.addAll(products);
                             productAdapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(MainActivity.this, "Không có sản phẩm nào!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProductList.this, "Không có sản phẩm nào!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -61,8 +58,9 @@ public class ProductList extends AppCompatActivity {
     private List<Product> loadProductsFromDatabase() {
         List<Product> productList = new ArrayList<>();
         try {
-            ConnectionClass connectionClass = new ConnectionClass();
-            Connection conn = connectionClass.CONN();
+            // Sử dụng đầy đủ tên gói của lớp Connection
+            com.example.sellpicture.Connection connectionClass = new com.example.sellpicture.Connection();
+            java.sql.Connection conn = connectionClass.CONN();
 
             if (conn != null) {
                 Log.d("DatabaseConnection", "Kết nối thành công");
@@ -90,5 +88,4 @@ public class ProductList extends AppCompatActivity {
         }
         return productList;
     }
-
 }
