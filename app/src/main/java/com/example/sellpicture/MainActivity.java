@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ProductListActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
@@ -50,7 +50,7 @@ public class ProductListActivity extends AppCompatActivity {
                             productList.addAll(products);
                             productAdapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(ProductListActivity.this, "Không có sản phẩm nào!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Không có sản phẩm nào!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
