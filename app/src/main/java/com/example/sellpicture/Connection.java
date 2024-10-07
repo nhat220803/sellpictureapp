@@ -30,4 +30,3 @@ public class Connection {
         return conn;
     }
 }
-
