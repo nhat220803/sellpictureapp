@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainActivity extends AppCompatActivity {
+public class ProductListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.product_list);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                             productList.addAll(products);
                             productAdapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(MainActivity.this, "Không có sản phẩm nào!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProductListActivity.this, "Không có sản phẩm nào!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
