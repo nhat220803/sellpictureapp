@@ -67,6 +67,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (rs.next()) {
                     showToastMessage("Đăng nhập thành công!");
+                    Intent intent = new Intent(LoginActivity.this, ProductList.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     showToastMessage("Tên người dùng hoặc mật khẩu không đúng.");
                 }
