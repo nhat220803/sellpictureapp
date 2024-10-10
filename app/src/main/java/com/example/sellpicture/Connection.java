@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 public class Connection {
     // Thông tin kết nối
-    private static final String db = "pictureshop";
+    private static final String db = "prm392_project";
     private static final String user = "root";
-    private static final String pass = "12345678";
+    private static final String pass = "1234567890";
     private static final String ip = "10.0.2.2";
     private static final String port = "3306";
 
