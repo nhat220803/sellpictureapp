@@ -1,4 +1,4 @@
-package com.example.sellpicture;
+package com.example.sellpicture.context;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;

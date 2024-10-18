@@ -4,73 +4,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CartActivity">
+    tools:context=".activity.User.CartActivity">
+
+    <include
+        layout="@layout/activity_menu"
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Nút quay lại và nút Buy trong cùng một hàng -->
+    <LinearLayout
+        android:id="@+id/layout_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Nút quay lại -->
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/btn_back"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:src="@drawable/baseline_arrow_back_24"-->
+        <!--            android:background="?attr/selectableItemBackgroundBorderless"-->
+        <!--            android:contentDescription="Back"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:layout_marginEnd="10dp"/>-->
+
+        <!-- Nút Buy -->
+        <Button
+            android:id="@+id/btnbuy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Buy"
+            android:layout_weight="2"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/emptycart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Empty cart"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#6077E6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Shopping Cart" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleviewcart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/layout1"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/layout_buttons">
 
-        <!-- Tiêu đề với biểu tượng giỏ hàng -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="16dp">
-
-            <ImageView
-                android:id="@+id/iconCart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_cart"
-                android:contentDescription="Giỏ hàng"
-                android:layout_marginEnd="8dp" />
-
-            <TextView
-                android:id="@+id/cartTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Giỏ Hàng"
-                android:textSize="24sp"/>
-        </LinearLayout>
-
-        <!-- RecyclerView để hiển thị sản phẩm trong giỏ hàng -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewCart"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <!-- TextView để hiển thị tổng tiền -->
         <TextView
-            android:id="@+id/textViewTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tổng cộng: $0.00"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:text="Total: "
+            android:textColor="@color/black"
             android:textSize="18sp"
-            android:layout_gravity="end"/>
+            android:textStyle="bold" />
 
-        <!-- Nút Quay lại -->
-        <Button
-            android:id="@+id/buttonBackToProducts"
+        <TextView
+            android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quay lại"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"/>
-
-        <!-- Nút Checkout -->
-        <Button
-            android:id="@+id/buttonCheckout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Checkout"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"/>
-
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:padding="5dp"
+            android:text="50.000"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

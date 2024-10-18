@@ -41,6 +41,7 @@ dependencies {
     implementation (libs.material.v190)  // Sử dụng version mới nhất
     implementation (libs.google.gson)
     testImplementation(libs.junit)
+    implementation (libs.glide)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation (libs.mysql.connector.java.v5149)
