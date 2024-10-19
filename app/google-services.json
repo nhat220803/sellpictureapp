@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "743940836326",
+    "project_id": "sellpicture-71698",
+    "storage_bucket": "sellpicture-71698.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743940836326:android:b9a41d78a109f9afb26427",
+        "android_client_info": {
+          "package_name": "com.example.sellpicture"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAgUepEKoLmHNwrGeUV_2ro6OiFopiRTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
