@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -9,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.sellpicture"
-        minSdk = 27
+        minSdk = 34
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -38,8 +37,12 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation (libs.recyclerview.v130)
+    implementation (libs.material.v190)  // Sử dụng version mới nhất
+    implementation (libs.google.gson)
     implementation(libs.firebase.analytics)
     testImplementation(libs.junit)
+    implementation (libs.glide)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.mysql.connector.java.v5149)

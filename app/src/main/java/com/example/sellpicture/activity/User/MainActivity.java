@@ -1,4 +1,4 @@
-package com.example.sellpicture;
+package com.example.sellpicture.activity.User;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.sellpicture.context.Connection;
+import com.example.sellpicture.R;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
