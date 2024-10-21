@@ -14,29 +14,13 @@
         android:theme="@style/Theme.Sellpicture"
         tools:targetApi="31">
         <activity
-            android:name=".activity.User.MainActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".activity.User.CartActivity"
-            android:exported="true">
-        </activity>
-        <activity
             android:name=".activity.User.SignupActivity"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".activity.User.ProductDetail"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".activity.User.ProductList"
-            android:exported="true">
-        </activity>
-
+            android:exported="false" />
         <activity
             android:name=".activity.User.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.User.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,6 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.User.ProductList"></activity>
+        <activity android:name=".activity.User.ProductDetail"></activity>
+        <activity android:name=".activity.User.CartActivity"></activity>
+        <activity android:name=".activity.User.PaymentActivity"></activity>
     </application>
 
 

@@ -1,5 +1,6 @@
 package com.example.sellpicture.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         this.listener = listener;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
         notifyDataSetChanged();
@@ -51,10 +53,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return cartItems.size();
     }
 
+//    public double getTotalPrice() {
+//        double total = 0;
+//        for (CartItem item : cartItems) {
+//            total += item.getTotalPrice();
+//        }
+//        return total;
+//    }
+
     public double getTotalPrice() {
         double total = 0;
         for (CartItem item : cartItems) {
-            total += item.getTotalPrice();
+            // Cập nhật giá tổng dựa trên giá sản phẩm và số lượng
+            total += item.getPrice() * item.getQuantity();
         }
         return total;
     }

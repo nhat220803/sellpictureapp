@@ -1,0 +1,52 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Danh sách sản phẩm -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCheckout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- Tổng tiền -->
+    <TextView
+        android:id="@+id/totalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total: $0.00"
+        android:textSize="18sp"
+        android:layout_gravity="end"
+        android:paddingTop="16dp"/>
+
+    <!-- Lựa chọn phương thức thanh toán -->
+    <RadioGroup
+        android:id="@+id/paymentMethodRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="16dp">
+
+        <RadioButton
+            android:id="@+id/paymentCreditCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Credit Card"/>
+
+        <RadioButton
+            android:id="@+id/paymentCashOnDelivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cash on Delivery"/>
+    </RadioGroup>
+
+    <!-- Nút xác nhận thanh toán -->
+    <Button
+        android:id="@+id/confirmPaymentButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm Payment"
+        android:layout_marginTop="24dp"/>
+</LinearLayout>
