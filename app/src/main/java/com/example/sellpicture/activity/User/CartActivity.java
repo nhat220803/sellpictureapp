@@ -49,8 +49,12 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
         loadCartItems();
 
         buyButton.setOnClickListener(v -> {
-            // Implement checkout process
+            double totalPrice = cartAdapter.getTotalPrice();  // Lấy tổng tiền từ giỏ hàng
+            Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
+            intent.putExtra("totalPrice", totalPrice);  // Truyền tổng tiền sang PaymentActivity
+            startActivity(intent);
         });
+
 
 //        backButton.setOnClickListener(v -> {
 //            // Implement checkout process
@@ -122,10 +126,14 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
 
     private void loadCartItems() {
         List<CartItem> cartItems = cartManager.getCartItems();
+        cartAdapter.setCartItems(cartItems);
+
         if (cartItems.isEmpty()) {
+            totalPriceText.setText(String.format("Total: $%.2f", cartAdapter.getTotalPrice()));
             emptyCartText.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             buyButton.setVisibility(View.GONE);
+            updateTotalPrice();
         } else {
             emptyCartText.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
@@ -143,6 +151,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
     @Override
     public void onQuantityChanged(int cartItemId, int newQuantity) {
         cartManager.updateCartItemQuantity(cartItemId, newQuantity);
+        List<CartItem> updatedCartItems = cartManager.getCartItems();
+        cartAdapter.setCartItems(updatedCartItems);
         updateTotalPrice();
     }
 

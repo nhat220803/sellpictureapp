@@ -1,82 +1,4 @@
-//package com.example.sellpicture.activity.User;
-//
-//import android.content.Intent;
-//import android.database.Cursor;
-//import android.database.sqlite.SQLiteDatabase;
-//import android.os.Bundle;
-//import android.widget.TextView;
-//import androidx.appcompat.app.AppCompatActivity;
-//import com.example.sellpicture.Context.CreateDatabase;
-//import com.example.sellpicture.R;
-//import com.example.sellpicture.model.Product;
-//
-//public class ProductDetail extends AppCompatActivity {
-//    private CreateDatabase createDatabase;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_product_detail);
-//        createDatabase = new CreateDatabase(this);
-//
-////        // Nhận productId từ Intent (hoặc bạn có thể lấy từ nguồn khác)
-////        Intent intent = getIntent();
-////        int productId = intent.getIntExtra("productId", -1);
-////
-////        // Kiểm tra productId hợp lệ và gọi getProduct() để lấy dữ liệu sản phẩm
-////        if (productId != -1) {
-////            Product product = getProduct(productId);  // Lấy sản phẩm theo ID
-////            if (product != null) {
-////                displayProduct(product);  // Hiển thị sản phẩm nếu tồn tại
-////            }
-////        }
-//        int productId = 1; // Bạn có thể thay đổi giá trị này thành ID thực tế
-//        Product product = getProduct(productId);
-//        displayProduct(product);
-//
-//    }
-//
-//    public void displayProduct(Product product) {
-//        TextView titleTextView = findViewById(R.id.detail_Title);
-//        TextView descriptionTextView = findViewById(R.id.detail_Des);
-//        TextView priceTextView = findViewById(R.id.detail_Price);
-//        TextView quantityTextView = findViewById(R.id.detail_Quantity);
-//
-//        titleTextView.setText(product.getName());
-//        descriptionTextView.setText(product.getDescription());
-//        priceTextView.setText(String.valueOf(product.getPrice()));
-//        quantityTextView.setText(String.valueOf(product.getStockQuantity()));
-//    }
-//
-//    public Product getProduct(int id) {
-//        SQLiteDatabase db = createDatabase.open();
-//        Cursor cursor = db.rawQuery("SELECT * FROM " + CreateDatabase.TB_products + " WHERE product_id = ?", new String[]{String.valueOf(id)});
-//        Product product = null;
-//        if (cursor.moveToFirst()) {
-//            do {
-//                // 4. Lấy dữ liệu từ từng cột
-//                String name = cursor.getString(cursor.getColumnIndexOrThrow("product_name"));
-//                String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
-//                double price = cursor.getDouble(cursor.getColumnIndexOrThrow("price"));
-//                int stock = cursor.getInt(cursor.getColumnIndexOrThrow("stock_quantity"));
-//                String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
-//
-//                // 5. Bạn có thể xử lý dữ liệu ở đây, ví dụ hiển thị ra log hoặc hiển thị lên giao diện
-//                product = new Product(id, name, description, price, stock, image);
-//
-//                // 6. Duyệt đến bản ghi tiếp theo
-//            } while (cursor.moveToNext());
-//        }
-//
-//        // 7. Đóng Cursor và cơ sở dữ liệu sau khi sử dụng xong
-//        cursor.close();
-//        db.close();
-//
-//        // 8. Trả về sản phẩm đã lấy được
-//        return product;
-//
-//    }
-//}
+
 
 package com.example.sellpicture.activity.User;
 
@@ -166,9 +88,11 @@ public class ProductDetail extends AppCompatActivity {
         }
 
         // Set up purchase button click listener
-//        purchaseButton.setOnClickListener(v -> {
-//            addToCart();
-//        });
+        purchaseButton.setOnClickListener(v -> {
+            addToCart();
+        });
+
+
 
         // Set up view cart button click listener
 //        viewCartButton.setOnClickListener(v -> {
@@ -203,10 +127,10 @@ public class ProductDetail extends AppCompatActivity {
         Toast.makeText(this, "Thanh tìm kiếm được hiển thị", Toast.LENGTH_SHORT).show();
     }
 
-    //    private void addToCart() {
-//        cartManager.addToCart(productId, 1); // Add 1 quantity of the product
-//        Toast.makeText(this, "Product added to cart", Toast.LENGTH_SHORT).show();
-//    }
+        private void addToCart() {
+        cartManager.addToCart(productId, 1); // Add 1 quantity of the product
+        Toast.makeText(this, "Product added to cart", Toast.LENGTH_SHORT).show();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

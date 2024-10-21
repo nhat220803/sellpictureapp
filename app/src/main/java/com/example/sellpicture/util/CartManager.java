@@ -46,7 +46,6 @@ public class CartManager {
         Cursor cursor = db.rawQuery("SELECT ci.*, p.* FROM " + CreateDatabase.TB_cart_items + " ci " +
                 " JOIN " + CreateDatabase.TB_products + " p ON ci." + CreateDatabase.TB_cart_items_product_id +
                 " = p." + CreateDatabase.TB_products_product_id, null);
-
         while (cursor.moveToNext()) {
             CartItem item = new CartItem(
                     cursor.getInt(cursor.getColumnIndexOrThrow(CreateDatabase.TB_cart_items_cart_item_id)),
