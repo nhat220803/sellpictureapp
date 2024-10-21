@@ -44,6 +44,15 @@
         android:textColorHint="#80FFFFFF"
         android:textColor="@android:color/white"
         android:layout_marginBottom="24dp"/>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cbRememberMe"
+        android:text="Lưu đăng nhap "
+        android:textColor="@color/white"
 
     <Button
         android:id="@+id/btnLogin"

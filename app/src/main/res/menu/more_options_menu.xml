@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/phone_shop"
+        android:title="Phone Shop" />
+    <item
+        android:id="@+id/shop_location"
+        android:title="Shop Location" />
+</menu>
