@@ -92,8 +92,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide; // Import Glide
+import com.example.sellpicture.adapter.ViewPager2Adapter;
 import com.example.sellpicture.context.CreateDatabase;
 import com.example.sellpicture.R;
 import com.example.sellpicture.model.Product;
@@ -108,6 +110,7 @@ public class ProductDetail extends AppCompatActivity {
     private CreateDatabase dbHelper;
     private int productId;
     private CartManager cartManager;
+    private ViewPager2 pagerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,30 +124,66 @@ public class ProductDetail extends AppCompatActivity {
         productQuantity = findViewById(R.id.detail_Quantity);
         productImage = findViewById(R.id.detail_Image);
         purchaseButton = findViewById(R.id.detail_Purchase);
+        pagerFragment = findViewById(R.id.viewpager2_fragment);
+
+
+
         // Thêm xử lý cho BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home) {
-                startActivity(new Intent(this, ProductList.class)); // Chuyển về màn hình danh sách sản phẩm
+                pagerFragment.setCurrentItem(0);
+//                startActivity(new Intent(this, ProductList.class)); // Chuyển về màn hình danh sách sản phẩm
                 return true;
             } else if (itemId == R.id.nav_search) {
-                showSearchBar(); // Hiển thị thanh tìm kiếm
+                pagerFragment.setCurrentItem(1);
+//                showSearchBar(); // Hiển thị thanh tìm kiếm
                 return true;
             } else if (itemId == R.id.nav_cart) {
-                startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
+                pagerFragment.setCurrentItem(2);
+//                startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                // startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
+                pagerFragment.setCurrentItem(3);
+//                 startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
                 return true;
             } else if (itemId == R.id.nav_more) {
-                showMoreOptions(); // Hiển thị thêm tùy chọn
+                pagerFragment.setCurrentItem(4);
+//                showMoreOptions(); // Hiển thị thêm tùy chọn
                 return true;
             }
 
             return false;
         });
+
+        pagerFragment.setAdapter(new ViewPager2Adapter(this));
+        pagerFragment.setCurrentItem(0);
+        pagerFragment.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                int itemId ;
+                if (position ==0){
+                    itemId = R.id.nav_home;
+                } else if (position==1) {
+                    itemId = R.id.nav_search;
+                } else if (position==2) {
+                    itemId = R.id.nav_cart;
+                } else if (position==3) {
+                    itemId = R.id.nav_profile;
+                } else if (position==4) {
+                    itemId = R.id.nav_more;
+                }else {
+                    itemId = R.id.nav_home;
+                }
+                bottomNavigationView.setSelectedItemId(itemId);
+            }
+        });
+
+
 //        ImageButton backButton = findViewById(R.id.detail_Back);
 //        viewCartButton = findViewById(R.id.detail_ViewCart);
 
