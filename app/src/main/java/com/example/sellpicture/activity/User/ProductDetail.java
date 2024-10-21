@@ -129,9 +129,7 @@ public class ProductDetail extends AppCompatActivity {
             if (itemId == R.id.nav_home) {
                 startActivity(new Intent(this, ProductList.class)); // Chuyển về màn hình danh sách sản phẩm
                 return true;
-            } else if (itemId == R.id.nav_search) {
-                showSearchBar(); // Hiển thị thanh tìm kiếm
-                return true;
+
             } else if (itemId == R.id.nav_cart) {
                 startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
                 return true;
@@ -166,15 +164,15 @@ public class ProductDetail extends AppCompatActivity {
         }
 
         // Set up purchase button click listener
-//        purchaseButton.setOnClickListener(v -> {
-//            addToCart();
-//        });
+        purchaseButton.setOnClickListener(v -> {
+            addToCart();
+        });
 
         // Set up view cart button click listener
-//        viewCartButton.setOnClickListener(v -> {
-//            Intent cartIntent = new Intent(ProductDetail.this, CartActivity.class); // Điều hướng đến trang CartActivity
-//            startActivity(cartIntent);
-//        });
+        viewCartButton.setOnClickListener(v -> {
+            Intent cartIntent = new Intent(ProductDetail.this, CartActivity.class); // Điều hướng đến trang CartActivity
+            startActivity(cartIntent);
+        });
     }
 
     private void showMoreOptions() {
@@ -198,15 +196,12 @@ public class ProductDetail extends AppCompatActivity {
     }
 
     // Hàm để hiển thị thanh tìm kiếm
-    private void showSearchBar() {
-        // Xử lý hiển thị thanh tìm kiếm ở đây
-        Toast.makeText(this, "Thanh tìm kiếm được hiển thị", Toast.LENGTH_SHORT).show();
-    }
 
-    //    private void addToCart() {
-//        cartManager.addToCart(productId, 1); // Add 1 quantity of the product
-//        Toast.makeText(this, "Product added to cart", Toast.LENGTH_SHORT).show();
-//    }
+
+        private void addToCart() {
+        cartManager.addToCart(productId, 1); // Add 1 quantity of the product
+        Toast.makeText(this, "Product added to cart", Toast.LENGTH_SHORT).show();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

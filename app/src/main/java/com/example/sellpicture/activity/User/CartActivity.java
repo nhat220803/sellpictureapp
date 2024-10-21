@@ -66,9 +66,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
             if (itemId == R.id.nav_home) {
                 startActivity(new Intent(this, ProductList.class)); // Chuyển về màn hình danh sách sản phẩm
                 return true;
-            } else if (itemId == R.id.nav_search) {
-                showSearchBar(); // Hiển thị thanh tìm kiếm
-                return true;
             } else if (itemId == R.id.nav_cart) {
                 startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
                 return true;
@@ -106,11 +103,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
         popup.show();
     }
 
-    // Hàm để hiển thị thanh tìm kiếm
-    private void showSearchBar() {
-        // Xử lý hiển thị thanh tìm kiếm ở đây
-        Toast.makeText(this, "Thanh tìm kiếm được hiển thị", Toast.LENGTH_SHORT).show();
-    }
+
 
 
 
