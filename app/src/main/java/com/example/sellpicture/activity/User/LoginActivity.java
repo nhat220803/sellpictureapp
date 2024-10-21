@@ -98,10 +98,12 @@
 package com.example.sellpicture.activity.User;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -115,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername, etPassword;
     private TextView tvRegisterLink;
     private CreateDatabase createDatabase;
+    private CheckBox cbRememberMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,8 +128,25 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
         tvRegisterLink = findViewById(R.id.tvRegisterLink);
+        cbRememberMe = findViewById(R.id.cbRememberMe);
+        
+
 
         createDatabase = new CreateDatabase(this);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+//        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+        boolean rememberMe = sharedPreferences.getBoolean("rememberMe", false); // Kiểm tra xem đã lưu thông tin đăng nhập hay chưa
+
+        if (rememberMe) {
+            // Nếu tùy chọn lưu thông tin đăng nhập được chọn, hiển thị lại tên người dùng và mật khẩu
+            String savedUsername = sharedPreferences.getString("username", "");
+            String savedPassword = sharedPreferences.getString("password", "");
+            etUsername.setText(savedUsername);
+            etPassword.setText(savedPassword);
+            cbRememberMe.setChecked(true); // Đặt checkbox ở trạng thái được chọn
+        }
+
 
         btnLogin.setOnClickListener(v -> {
             String username = etUsername.getText().toString().trim();
@@ -165,5 +185,25 @@ public class LoginActivity extends AppCompatActivity {
             cursor.close();
         }
         db.close();
+    }
+    private void saveLoginInfo(String username, String password, boolean rememberMe) {
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (rememberMe) {
+            // Lưu tên người dùng và mật khẩu nếu checkbox được chọn
+            editor.putString("username", username);
+            editor.putString("password", password);
+            editor.putBoolean("rememberMe", true);
+        } else {
+            // Xóa thông tin đăng nhập nếu checkbox không được chọn
+            editor.remove("username");
+            editor.remove("password");
+            editor.putBoolean("rememberMe", false);
+        }
+
+        editor.putBoolean("isLoggedIn", true);   // Đặt trạng thái đăng nhập là true
+        editor.apply(); // Lưu lại thay đổi
+        editor.commit();
     }
 }

@@ -183,6 +183,9 @@ public class SignupActivity extends AppCompatActivity {
         if (username.isEmpty() || password.isEmpty() || email.isEmpty() || fullName.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
+        }if (password.length()<8){
+            Toast.makeText(this, "Vui lòng nhập ít nhất 8 ký tự", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if (!password.equals(confirmPassword)) {
