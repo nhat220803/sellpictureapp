@@ -32,6 +32,7 @@
         <activity android:name=".activity.User.ProductDetail"></activity>
         <activity android:name=".activity.User.CartActivity"></activity>
         <activity android:name=".activity.User.PaymentActivity"></activity>
+        <activity android:name=".activity.Admin.AddProductActivity"></activity>
     </application>
 
 

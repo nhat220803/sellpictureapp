@@ -35,8 +35,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-
-
         recyclerView = findViewById(R.id.recycleviewcart);
         emptyCartText = findViewById(R.id.emptycart);
         totalPriceText = findViewById(R.id.total);
@@ -44,6 +42,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
 //        backButton = findViewById(R.id.btn_back);
 
         cartManager = new CartManager(this);
+
 
         setupRecyclerView();
         loadCartItems();

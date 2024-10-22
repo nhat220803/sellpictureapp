@@ -1,10 +1,13 @@
 package com.example.sellpicture.util;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.sellpicture.context.CreateDatabase;
 import com.example.sellpicture.model.CartItem;
+import com.example.sellpicture.model.Order;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +75,41 @@ public class CartManager {
         db.execSQL("DELETE FROM " + CreateDatabase.TB_cart_items +
                         " WHERE " + CreateDatabase.TB_cart_items_cart_item_id + " = ?",
                 new String[]{String.valueOf(cartItemId)});
+    }
+
+//    public void clearCart() {
+//        db.execSQL("DELETE FROM " + CreateDatabase.TB_cart_items);
+//        db.execSQL("DELETE FROM " + CreateDatabase.TB_cart);
+//    }
+
+    public void clearCart() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("cart_items", null, null); // Xóa tất cả các bản ghi trong bảng cart
+        db.close();
+    }
+
+
+    public void saveOrder(Order order) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues orderValues = new ContentValues();
+        orderValues.put("total_price", order.getTotalPrice());
+        orderValues.put("payment_method", order.getPaymentMethod());
+        orderValues.put("order_status", order.getOrderStatus());
+
+        // Lưu đơn hàng vào bảng orders
+        long orderId = db.insert("orders", null, orderValues);
+
+        // Lưu các sản phẩm trong đơn hàng vào bảng order_items
+        for (CartItem item : order.getCartItems()) {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put("order_id", orderId); // ID đơn hàng đã lưu
+            itemValues.put("product_id", item.getProductId());
+            itemValues.put("quantity", item.getQuantity());
+            itemValues.put("price", item.getPrice());
+            db.insert("order_items", null, itemValues);
+        }
+
+        db.close();
     }
 
     public void close() {

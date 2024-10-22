@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sellpicture.activity.Admin.AddProductActivity;
 import com.example.sellpicture.context.CreateDatabase;
 import com.example.sellpicture.R;
 
@@ -58,7 +59,14 @@ public class LoginActivity extends AppCompatActivity {
 
         if (cursor != null && cursor.moveToFirst()) {
             Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(LoginActivity.this, ProductList.class);
+            String role = checkUserRole(username); // Kiểm tra vai trò
+
+            Intent intent;
+            if ("Admin".equals(role)) {
+                intent = new Intent(LoginActivity.this, AddProductActivity.class); // Thay thế bằng activity dành cho admin
+            } else {
+                intent = new Intent(LoginActivity.this, ProductList.class);
+            }
             startActivity(intent);
             finish();
         } else {
@@ -69,5 +77,39 @@ public class LoginActivity extends AppCompatActivity {
             cursor.close();
         }
         db.close();
+    }
+
+    private String checkUserRole(String username) {
+        SQLiteDatabase db = createDatabase.open();
+        String role = null;
+
+        // Truy vấn để lấy vai trò của người dùng theo tên người dùng
+        String sql = "SELECT " + CreateDatabase.TB_users_role_id + " FROM " + CreateDatabase.TB_users + " WHERE " + CreateDatabase.TB_users_username + " = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{username});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int roleId = cursor.getInt(cursor.getColumnIndexOrThrow(CreateDatabase.TB_users_role_id));
+            role = getRoleName(roleId); // Lấy tên vai trò từ ID vai trò
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+
+        return role;
+    }
+
+    // Hàm này sẽ trả về tên vai trò dựa trên ID vai trò
+    private String getRoleName(int roleId) {
+        switch (roleId) {
+            case 1:
+                return "User";
+            case 2:
+                return "Admin";
+            // Thêm các vai trò khác nếu cần
+            default:
+                return "Unknown Role";
+        }
     }
 }
