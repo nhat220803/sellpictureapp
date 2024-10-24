@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, QuenMatkhauActivity.class));
+//                startActivity(new Intent(LoginActivity.this, QuenMatkhauActivity.class));
             }
         });
 

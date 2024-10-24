@@ -84,6 +84,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -136,7 +137,8 @@ public class ProductDetail extends AppCompatActivity {
                 startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                // startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
+                Log.e("TAG123", "onCreate: " );
+                startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
                 return true;
             } else if (itemId == R.id.nav_more) {
                 showMoreOptions(); // Hiển thị thêm tùy chọn
