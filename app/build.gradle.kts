@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
+
 }
+
 
 android {
     namespace = "com.example.sellpicture"
@@ -8,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.sellpicture"
-        minSdk = 27
+        minSdk = 34
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
