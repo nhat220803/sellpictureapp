@@ -83,7 +83,7 @@ public class ProductList extends AppCompatActivity {
                 Toast.makeText(this, "Shop Location được chọn", Toast.LENGTH_SHORT).show();
                 return true;
             } else if (item.getItemId() == R.id.chat_with_shop){
-       //         startActivity(new Intent(this, ChatActivity.class));
+                startActivity(new Intent(this, ChatActivity.class));
 
             }
             return false;

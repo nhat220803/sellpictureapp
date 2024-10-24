@@ -29,7 +29,7 @@ import java.util.concurrent.Executors;
 public class ChatActivity extends AppCompatActivity {
     private EditText etMessage;
     private TextView tvMessages;
-    private Button btnSend;
+    private Button btnSend, btnClear;
 
     private String serverIP = "10.0.2.16"; // Đặt IP mặc định
     private static final int serverPort = 8080; // Đặt port mặc định
@@ -43,14 +43,17 @@ public class ChatActivity extends AppCompatActivity {
         etMessage = findViewById(R.id.etMessage);
         tvMessages = findViewById(R.id.tvMessages);
         btnSend = findViewById(R.id.btnSend);
-
+        btnClear = findViewById(R.id.btnClear);
         executorService = Executors.newFixedThreadPool(2);
 
         // Tự động kết nối với server khi khởi chạy ứng dụng
         connectWithServer();
+
+        btnClear.setOnClickListener(v -> tvMessages.setText(""));
+
         // Thêm xử lý cho BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home) {
@@ -71,6 +74,8 @@ public class ChatActivity extends AppCompatActivity {
             return false;
         });
     }
+
+
     private void showMoreOptions() {
         PopupMenu popup = new PopupMenu(this, findViewById(R.id.nav_more));
         popup.getMenuInflater().inflate(R.menu.more_options_menu, popup.getMenu());
