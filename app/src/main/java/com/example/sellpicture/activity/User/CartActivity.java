@@ -97,8 +97,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
                 return true;
             } else if (item.getItemId() == R.id.shop_location) {
                 // Xử lý khi chọn Shop Location
-                Toast.makeText(this, "Shop Location được chọn", Toast.LENGTH_SHORT).show();
-                return true;
+                startActivity(new Intent(this, MapActivity.class));
             }else if (item.getItemId() == R.id.chat_with_shop){
                        startActivity(new Intent(this, ChatActivity.class));
 

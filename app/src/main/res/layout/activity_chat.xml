@@ -6,14 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     tools:context=".activity.User.ChatActivity">
-    <include
-        layout="@layout/activity_menu"
-        android:id="@+id/bottom_navigation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <!-- TextView để hiển thị trạng thái server -->
     <TextView
@@ -59,4 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="SEND" />
+    <include
+        layout="@layout/activity_menu"
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

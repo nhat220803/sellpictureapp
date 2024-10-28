@@ -64,7 +64,7 @@ public class ChatActivity extends AppCompatActivity {
                 startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                // startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity
+                 startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity
                 return true;
             } else if (itemId == R.id.nav_more) {
                 showMoreOptions(); // Hiển thị thêm tùy chọn
@@ -87,8 +87,7 @@ public class ChatActivity extends AppCompatActivity {
                 return true;
             } else if (item.getItemId() == R.id.shop_location) {
                 // Xử lý khi chọn Shop Location
-                Toast.makeText(this, "Shop Location được chọn", Toast.LENGTH_SHORT).show();
-                return true;
+                startActivity(new Intent(this, MapActivity.class));
             }else if (item.getItemId() == R.id.chat_with_shop){
                 //         startActivity(new Intent(this, ChatActivity.class));
 
@@ -98,6 +97,7 @@ public class ChatActivity extends AppCompatActivity {
 
         popup.show();
     }
+
     public void connectWithServer() {
         executorService.execute(() -> {
             try {

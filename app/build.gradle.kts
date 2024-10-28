@@ -48,10 +48,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.mysql.connector.java.v5149)
-    implementation (libs.glide)
     annotationProcessor (libs.compiler)
     implementation (libs.mysql.connector.java.v5149)
-    implementation ("com.github.bumptech.glide:glide:4.14.2")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
-    implementation("com.google.android.gms:play-services-maps:18.0.1")
+    implementation(libs.play.services.maps.v1801)
 }
