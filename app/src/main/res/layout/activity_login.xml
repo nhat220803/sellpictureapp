@@ -55,11 +55,36 @@
         android:background="@drawable/rounded_button"
         android:textColor="@android:color/white"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cbSave"/>
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lưu đăng nhập"
+        android:textColor="@android:color/white"/>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tvRegisterLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chưa có tài khoản? Đăng ký ngay"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"/>
+
+    <TextView
+        android:id="@+id/tvForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quên mật khẩu?"
         android:textColor="@android:color/white"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"/>
