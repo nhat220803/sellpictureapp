@@ -1,12 +1,14 @@
 package com.example.sellpicture.activity.User;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.sellpicture.R;
 import com.example.sellpicture.context.CreateDatabase;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class UserProfileActivity extends AppCompatActivity {
     private TextView tvFullName, tvUsername, tvEmail, tvPhone, tvRole;
@@ -41,6 +44,29 @@ public class UserProfileActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
 
         getUserInfo(sharedPreferences.getString("username", ""));
+
+        // Thêm xử lý cho BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(this, ProductList.class)); // Chuyển về màn hình danh sách sản phẩm
+                return true;
+
+            } else if (itemId == R.id.nav_cart) {
+                startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
+                return true;
+            } else if (itemId == R.id.nav_more) {
+                showMoreOptions(); // Hiển thị thêm tùy chọn
+                return true;
+            }
+
+            return false;
+        });
 
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +93,29 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+    private void showMoreOptions() {
+        PopupMenu popup = new PopupMenu(this, findViewById(R.id.nav_more));
+        popup.getMenuInflater().inflate(R.menu.more_options_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.phone_shop) {
+                // Xử lý khi chọn Phone Shop
+                Toast.makeText(this, "Phone Shop được chọn", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (item.getItemId() == R.id.shop_location) {
+                // Xử lý khi chọn Shop Location
+                Toast.makeText(this, "Shop Location được chọn", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (item.getItemId() == R.id.chat_with_shop){
+                startActivity(new Intent(this, ChatActivity.class));
+
+            }
+            return false;
+        });
+
+        popup.show();
     }
     private void getUserInfo(String username) {
         SQLiteDatabase db = createDatabase.open();

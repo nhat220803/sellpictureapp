@@ -134,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox cbRememberMe;
     private SharedPreferences sharedPreferences;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +144,17 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
         tvRegisterLink = findViewById(R.id.tvRegisterLink);
+        cbRememberMe = findViewById(R.id.cbSave);
+        sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+
+        boolean rememberMe = sharedPreferences.getBoolean("rememberMe", false);
+        if (rememberMe) {
+            String savedUsername = sharedPreferences.getString("username", "");
+            String savedPassword = sharedPreferences.getString("password", "");
+            etUsername.setText(savedUsername);
+            etPassword.setText(savedPassword);
+            cbRememberMe.setChecked(true);
+        }
         checkNotificationPermission();
 
         createDatabase = new CreateDatabase(this);
@@ -208,7 +220,7 @@ public class LoginActivity extends AppCompatActivity {
             // Lưu thông tin đăng nhập nếu checkbox "Remember Me" được chọn
             saveLoginInfo(username, password, cbRememberMe.isChecked());
             Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(LoginActivity.this, ProductDetail.class);
+//            Intent intent = new Intent(LoginActivity.this, ProductDetail.class);
 
             // Kiểm tra giỏ hàng và hiển thị thông báo nếu có sản phẩm
             checkCartAndNotify();
@@ -222,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 intent1 = new Intent(LoginActivity.this, ProductList.class);
             }
-            startActivity(intent);
+            startActivity(intent2);
             finish();
         } else {
             Toast.makeText(LoginActivity.this, "Tên người dùng hoặc mật khẩu không đúng.", Toast.LENGTH_SHORT).show();
