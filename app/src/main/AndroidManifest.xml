@@ -21,6 +21,8 @@
         <activity
             android:name=".activity.User.ProductDetail"
             android:exported="false" />
+        <activity android:name=".activity.User.SupportChatActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".activity.User.ProductList"

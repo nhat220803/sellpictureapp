@@ -89,8 +89,10 @@ public class ChatActivity extends AppCompatActivity {
                 // Xử lý khi chọn Shop Location
                 startActivity(new Intent(this, MapActivity.class));
             }else if (item.getItemId() == R.id.chat_with_shop){
-                //         startActivity(new Intent(this, ChatActivity.class));
+                        startActivity(new Intent(this, ChatActivity.class));
 
+            }else if (item.getItemId() == R.id.support_chat ) {
+                   startActivity(new Intent(this,SupportChatActivity.class));
             }
             return false;
         });

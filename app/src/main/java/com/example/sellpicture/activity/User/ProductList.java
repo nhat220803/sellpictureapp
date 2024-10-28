@@ -84,6 +84,8 @@ public class ProductList extends AppCompatActivity {
             } else if (item.getItemId() == R.id.chat_with_shop){
                 startActivity(new Intent(this, ChatActivity.class));
 
+            }else if (item.getItemId() == R.id.support_chat ) {
+                   startActivity(new Intent(this,SupportChatActivity.class));
             }
             return false;
         });
