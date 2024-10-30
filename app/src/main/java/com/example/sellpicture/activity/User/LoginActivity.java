@@ -1,110 +1,9 @@
-//package com.example.sellpicture.activity.User;
-//
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.widget.Button;
-//import android.widget.EditText;
-//import android.widget.TextView;
-//import android.widget.Toast;
-//
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//import com.example.sellpicture.Context.Connection;
-//import com.example.sellpicture.R;
-//
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.util.concurrent.ExecutorService;
-//import java.util.concurrent.Executors;
-//
-//public class LoginActivity extends AppCompatActivity {
-//    private EditText etUsername, etPassword;
-//    private TextView tvRegisterLink;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_login);
-//
-//        etUsername = findViewById(R.id.etUsername);
-//        etPassword = findViewById(R.id.etPassword);
-//        Button btnLogin = findViewById(R.id.btnLogin);
-//        tvRegisterLink = findViewById(R.id.tvRegisterLink);
-//
-//        btnLogin.setOnClickListener(v -> {
-//            String username = etUsername.getText().toString().trim();
-//            String password = etPassword.getText().toString().trim();
-//
-//            if (username.isEmpty() || password.isEmpty()) {
-//                Toast.makeText(LoginActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(LoginActivity.this, "Đang đăng nhập...", Toast.LENGTH_SHORT).show();
-//                login(username, password);
-//            }
-//        });
-//
-//        tvRegisterLink.setOnClickListener(v -> {
-//            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-//            startActivity(intent);
-//        });
-//    }
-//
-//    public void login(String username, String password) {
-//        ExecutorService executor = Executors.newSingleThreadExecutor();
-//        executor.execute(() -> {
-//            Connection connectionClass = new Connection();
-//            java.sql.Connection conn = connectionClass.CONN();
-//            if (conn == null) {
-//                showToastMessage("Không thể kết nối tới database");
-//            }
-//
-//            String sql = "SELECT * FROM Users WHERE username = ? AND password = ?";
-//
-//            try {
-//                PreparedStatement stmt = conn.prepareStatement(sql);
-//                stmt.setString(1, username);
-//                stmt.setString(2, password);
-//                ResultSet rs = stmt.executeQuery();
-//
-//                if (rs.next()) {
-//                    showToastMessage("Đăng nhập thành công!");
-//                    Intent intent = new Intent(LoginActivity.this, ProductList.class);
-//                    startActivity(intent);
-//                    finish();
-//                } else {
-//                    showToastMessage("Tên người dùng hoặc mật khẩu không đúng.");
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//                Log.e("TAG123", "login: ", e);
-//            } finally {
-//                try {
-//                    conn.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                    Log.e("TAG123", "login: ", e);
-//                }
-//            }
-//        });
-//    }
-//
-//    private void showToastMessage(String message) {
-//        runOnUiThread(() -> Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show());
-//    }
-//}
 
 package com.example.sellpicture.activity.User;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -123,7 +22,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import com.example.sellpicture.activity.Admin.AddProductActivity;
+import com.example.sellpicture.activity.Admin.AdminDashboardActivity;
 import com.example.sellpicture.context.CreateDatabase;
 import com.example.sellpicture.R;
 
@@ -131,6 +30,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername, etPassword;
     private TextView tvRegisterLink,tvForgotPassword;
     private CreateDatabase createDatabase;
+    private SharedPreferences sharedPreferences;
+    private int userId;
+
     private CheckBox cbRememberMe;
     private SharedPreferences sharedPreferences;
 
@@ -158,6 +60,14 @@ public class LoginActivity extends AppCompatActivity {
         checkNotificationPermission();
 
         createDatabase = new CreateDatabase(this);
+
+        // Khởi tạo SharedPreferences
+        sharedPreferences = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
+
+        // Kiểm tra xem người dùng đã đăng nhập chưa
+//        if (isLoggedIn()) {
+//            redirectToMainActivity();
+//        }
 
         btnLogin.setOnClickListener(v -> {
             String username = etUsername.getText().toString().trim();
@@ -220,6 +130,8 @@ public class LoginActivity extends AppCompatActivity {
             // Lưu thông tin đăng nhập nếu checkbox "Remember Me" được chọn
             saveLoginInfo(username, password, cbRememberMe.isChecked());
             Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            int userId = cursor.getInt(cursor.getColumnIndexOrThrow(CreateDatabase.TB_users_user_id));
+            String role = checkUserRole(userId);
 //            Intent intent = new Intent(LoginActivity.this, ProductDetail.class);
 
             // Kiểm tra giỏ hàng và hiển thị thông báo nếu có sản phẩm
@@ -228,6 +140,11 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent2 = new Intent(LoginActivity.this, ProductList.class);
             String role = checkUserRole(username); // Kiểm tra vai trò
 
+            // Lưu trạng thái đăng nhập vào SharedPreferences
+            saveLoginState(userId, username, role);
+
+            // Chuyển hướng dựa trên vai trò của người dùng
+            Intent intent;
             Intent intent1;
             if ("Admin".equals(role)) {
                 intent1 = new Intent(LoginActivity.this, AddProductActivity.class); // Thay thế bằng activity dành cho admin
@@ -319,17 +236,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private String checkUserRole(String username) {
+    private String checkUserRole(int userId) {
         SQLiteDatabase db = createDatabase.open();
         String role = null;
 
-        // Truy vấn để lấy vai trò của người dùng theo tên người dùng
-        String sql = "SELECT " + CreateDatabase.TB_users_role_id + " FROM " + CreateDatabase.TB_users + " WHERE " + CreateDatabase.TB_users_username + " = ?";
-        Cursor cursor = db.rawQuery(sql, new String[]{username});
+        String sql = "SELECT " + CreateDatabase.TB_users_role_id + " FROM " + CreateDatabase.TB_users + " WHERE " + CreateDatabase.TB_users_user_id + " = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(userId)});
 
         if (cursor != null && cursor.moveToFirst()) {
             int roleId = cursor.getInt(cursor.getColumnIndexOrThrow(CreateDatabase.TB_users_role_id));
-            role = getRoleName(roleId); // Lấy tên vai trò từ ID vai trò
+            role = getRoleName(roleId);
         }
 
         if (cursor != null) {
@@ -340,16 +256,43 @@ public class LoginActivity extends AppCompatActivity {
         return role;
     }
 
-    // Hàm này sẽ trả về tên vai trò dựa trên ID vai trò
     private String getRoleName(int roleId) {
         switch (roleId) {
             case 1:
                 return "User";
             case 2:
                 return "Admin";
-            // Thêm các vai trò khác nếu cần
             default:
                 return "Unknown Role";
         }
     }
+
+    // Hàm lưu trạng thái đăng nhập vào SharedPreferences
+    private void saveLoginState(int userId, String username, String role) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("userId", userId);
+        editor.putString("username", username);
+        editor.putString("role", role);
+        editor.putBoolean("isLoggedIn", true);
+        editor.apply();
+    }
+
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    private boolean isLoggedIn() {
+        return sharedPreferences.getBoolean("isLoggedIn", false);
+    }
+
+    // Chuyển hướng đến MainActivity nếu đã đăng nhập
+//    private void redirectToMainActivity() {
+//        String role = sharedPreferences.getString("role", "User");
+//
+//        Intent intent;
+//        if ("Admin".equals(role)) {
+//            intent = new Intent(LoginActivity.this, AddProductActivity.class);
+//        } else {
+//            intent = new Intent(LoginActivity.this, ProductList.class);
+//        }
+//        startActivity(intent);
+//        finish();
+//    }
 }

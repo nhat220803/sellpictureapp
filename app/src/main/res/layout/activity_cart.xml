@@ -15,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Nút quay lại và nút Buy trong cùng một hàng -->
     <LinearLayout
         android:id="@+id/layout_buttons"
         android:layout_width="match_parent"

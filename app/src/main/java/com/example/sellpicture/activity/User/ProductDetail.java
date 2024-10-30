@@ -2,7 +2,9 @@
 
 package com.example.sellpicture.activity.User;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,7 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide; // Import Glide
+import com.bumptech.glide.Glide;
 import com.example.sellpicture.context.CreateDatabase;
 import com.example.sellpicture.R;
 import com.example.sellpicture.model.Product;
@@ -31,11 +33,12 @@ public class ProductDetail extends AppCompatActivity {
     private CreateDatabase dbHelper;
     private int productId;
     private CartManager cartManager;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_detail); // Ensure you're using the correct layout
+        setContentView(R.layout.activity_product_detail);
 
         // Initialize views
         productName = findViewById(R.id.detail_Title);
@@ -44,39 +47,20 @@ public class ProductDetail extends AppCompatActivity {
         productQuantity = findViewById(R.id.detail_Quantity);
         productImage = findViewById(R.id.detail_Image);
         purchaseButton = findViewById(R.id.detail_Purchase);
-        // Thêm xử lý cho BottomNavigationView
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            int itemId = item.getItemId();
 
-            if (itemId == R.id.nav_home) {
-                startActivity(new Intent(this, ProductList.class)); // Chuyển về màn hình danh sách sản phẩm
-                return true;
+        // Lấy userId từ SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt("userId", -1);
 
-            } else if (itemId == R.id.nav_cart) {
-                startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
-                return true;
-            } else if (itemId == R.id.nav_profile) {
-                Log.e("TAG123", "onCreate: " );
-                startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
-                return true;
-            } else if (itemId == R.id.nav_more) {
-                showMoreOptions(); // Hiển thị thêm tùy chọn
-                return true;
-            }
+        if (userId == -1) {
+            // Chuyển hướng về LoginActivity nếu chưa đăng nhập
+            Intent loginIntent = new Intent(ProductDetail.this, LoginActivity.class);
+            startActivity(loginIntent);
+            finish();
+            return;
+        }
 
-            return false;
-        });
-//        ImageButton backButton = findViewById(R.id.detail_Back);
-//        viewCartButton = findViewById(R.id.detail_ViewCart);
-
-        // Set click listener for the back button
-//        backButton.setOnClickListener(v -> {// This will close the current activity and return to the previous one
-//            Intent prolistintent = new Intent(ProductDetail.this, ProductList.class); // Điều hướng đến trang CartActivity
-//            startActivity(prolistintent);
-//        });
-
-        // Initialize database helper
+        // Initialize database helper and cart manager
         dbHelper = new CreateDatabase(this);
         cartManager = new CartManager(this);
 
@@ -89,16 +73,32 @@ public class ProductDetail extends AppCompatActivity {
 
         // Set up purchase button click listener
         purchaseButton.setOnClickListener(v -> {
-            addToCart();
+            addToCart(userId, productId); // Thêm sản phẩm vào giỏ hàng với userId
         });
 
+        // Thêm xử lý cho BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
 
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(this, ProductList.class)); // Chuyển về màn hình danh sách sản phẩm
+                return true;
 
-        // Set up view cart button click listener
-//        viewCartButton.setOnClickListener(v -> {
-//            Intent cartIntent = new Intent(ProductDetail.this, CartActivity.class); // Điều hướng đến trang CartActivity
-//            startActivity(cartIntent);
-//        });
+            } else if (itemId == R.id.nav_cart) {
+                startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                Log.e("TAG123", "onCreate: " );
+                startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
+                return true;
+            } else if (itemId == R.id.nav_more) {
+                showMoreOptions(); // Hiển thị thêm tùy chọn
+                return true;
+            }
+
+            return false;
+        });
     }
 
     private void showMoreOptions() {
@@ -126,16 +126,14 @@ public class ProductDetail extends AppCompatActivity {
     }
 
     // Hàm để hiển thị thanh tìm kiếm
-
-
-        private void addToCart() {
-        cartManager.addToCart(productId, 1); // Add 1 quantity of the product
-        Toast.makeText(this, "Product added to cart", Toast.LENGTH_SHORT).show();
+    private void showSearchBar() {
+        // Xử lý hiển thị thanh tìm kiếm ở đây
+        Toast.makeText(this, "Thanh tìm kiếm được hiển thị", Toast.LENGTH_SHORT).show();
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        cartManager.close();
+
+    private void addToCart(int userId, int productId) {
+        cartManager.addToCart(userId, productId, 1); // Thêm 1 sản phẩm vào giỏ hàng cho userId
+        Toast.makeText(this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
     }
 
     private void loadProductDetails(int productId) {
@@ -150,7 +148,7 @@ public class ProductDetail extends AppCompatActivity {
                     cursor.getString(cursor.getColumnIndexOrThrow(CreateDatabase.TB_products_description)),
                     cursor.getDouble(cursor.getColumnIndexOrThrow(CreateDatabase.TB_products_price)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(CreateDatabase.TB_products_stock_quantity)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(CreateDatabase.TB_products_image)) // Get image from DB
+                    cursor.getString(cursor.getColumnIndexOrThrow(CreateDatabase.TB_products_image))
             );
 
             // Update UI with product details
@@ -171,10 +169,9 @@ public class ProductDetail extends AppCompatActivity {
         db.close();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cartManager.close();
+    }
 }
-
-
-
-
-

@@ -132,7 +132,7 @@ public class CreateDatabase extends SQLiteOpenHelper {
                 + TB_products_image + " TEXT, "
                 + "FOREIGN KEY(" + TB_products_category_id + ") REFERENCES " + TB_product_categories + "(" + TB_product_categories_category_id + ") ON DELETE SET NULL);";
 
-        // Tạo bảng CartItem
+        // Tạo bảng Cart
         String tbCart = "CREATE TABLE " + TB_cart + " ("
                 + TB_cart_cart_id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TB_cart_user_id + " INTEGER, "

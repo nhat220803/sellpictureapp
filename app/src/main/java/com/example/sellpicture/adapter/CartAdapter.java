@@ -31,10 +31,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @SuppressLint("NotifyDataSetChanged")
     public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
+        this.cartItems.clear();
+        this.cartItems.addAll(cartItems);
         notifyDataSetChanged();
     }
-
 
     @NonNull
     @Override
@@ -49,23 +49,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.bind(item);
     }
 
+
+
     @Override
     public int getItemCount() {
         return cartItems.size();
     }
 
-//    public double getTotalPrice() {
-//        double total = 0;
-//        for (CartItem item : cartItems) {
-//            total += item.getTotalPrice();
-//        }
-//        return total;
-//    }
-
     public double getTotalPrice() {
         double total = 0;
         for (CartItem item : cartItems) {
-            // Cập nhật giá tổng dựa trên giá sản phẩm và số lượng
             total += item.getPrice() * item.getQuantity();
         }
         return total;
@@ -95,20 +88,34 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     .load(item.getImage())
                     .into(productImage);
 
+
             minusButton.setOnClickListener(v -> {
                 if (item.getQuantity() > 1) {
-                    listener.onQuantityChanged(item.getId(), item.getQuantity() - 1);
+                    int newQuantity = item.getQuantity() - 1;
+                    item.setQuantity(newQuantity);
+                    quantityText.setText(String.valueOf(newQuantity));
+                    listener.onQuantityChanged(item.getId(), newQuantity);
                 }
             });
 
             addButton.setOnClickListener(v -> {
-                listener.onQuantityChanged(item.getId(), item.getQuantity() + 1);
+                int newQuantity = item.getQuantity() + 1;
+                item.setQuantity(newQuantity);
+                quantityText.setText(String.valueOf(newQuantity));
+                listener.onQuantityChanged(item.getId(), newQuantity);
             });
 
             deleteButton.setOnClickListener(v -> {
                 listener.onItemRemoved(item.getId());
+                removeCartItem(item);
             });
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void removeCartItem(CartItem item) {
+        cartItems.remove(item);
+        notifyDataSetChanged();
     }
 
     public interface CartItemListener {
