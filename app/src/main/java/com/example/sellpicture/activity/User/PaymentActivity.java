@@ -1,101 +1,52 @@
 package com.example.sellpicture.activity.User;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sellpicture.R;
-import com.example.sellpicture.adapter.CheckoutAdapter;
-import com.example.sellpicture.model.CartItem;
-import com.example.sellpicture.model.Order;
-import com.example.sellpicture.util.CartManager;
 
-import java.util.List;
-
-// PaymentActivity.java
 public class PaymentActivity extends AppCompatActivity {
-    private RecyclerView recyclerViewCheckout;
-    private TextView totalAmountText;
-    private RadioGroup paymentMethodRadioGroup;
-    private Button confirmPaymentButton;
 
-    private CheckoutAdapter checkoutAdapter;
-    private CartManager cartManager;
+    private EditText recipientNameEditText;
+    private EditText addressEditText;
+    private EditText phoneNumberEditText;
+    private Button confirmPaymentButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkout);
+        setContentView(R.layout.activity_payment);
 
-        recyclerViewCheckout = findViewById(R.id.recyclerViewCheckout);
-        totalAmountText = findViewById(R.id.totalAmount);
-        paymentMethodRadioGroup = findViewById(R.id.paymentMethodRadioGroup);
-        confirmPaymentButton = findViewById(R.id.confirmPaymentButton);
+        recipientNameEditText = findViewById(R.id.recipientName);
+        addressEditText = findViewById(R.id.address);
+        phoneNumberEditText = findViewById(R.id.phoneNumber);
+        confirmPaymentButton = findViewById(R.id.confirmPayment);
 
-        cartManager = new CartManager(this);
-
-        // Lấy tổng giá trị đơn hàng từ intent
-        double totalPrice = getIntent().getDoubleExtra("totalPrice", 0.0);
-
-        // Hiển thị danh sách sản phẩm và tổng tiền
-        setupRecyclerView();
-        loadCartItems();
-        totalAmountText.setText(String.format("Total: $%.2f", totalPrice));
-
-        // Xử lý sự kiện khi người dùng bấm "Confirm Payment"
         confirmPaymentButton.setOnClickListener(v -> {
-            int selectedPaymentMethodId = paymentMethodRadioGroup.getCheckedRadioButtonId();
-            if (selectedPaymentMethodId == -1) {
-                Toast.makeText(PaymentActivity.this, "Please select a payment method", Toast.LENGTH_SHORT).show();
+            // Get the entered details
+            String recipientName = recipientNameEditText.getText().toString();
+            String address = addressEditText.getText().toString();
+            String phoneNumber = phoneNumberEditText.getText().toString();
+
+            // Validate input fields
+            if (recipientName.isEmpty() || address.isEmpty() || phoneNumber.isEmpty()) {
+                Toast.makeText(PaymentActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
-            String paymentMethod = getPaymentMethod(selectedPaymentMethodId);
-            processPayment(totalPrice, paymentMethod);
+
+            // Handle order processing for cash on delivery here if needed
+
+            // Show confirmation
+            Toast.makeText(PaymentActivity.this, "Order confirmed! Cash on delivery selected.", Toast.LENGTH_SHORT).show();
+
+            // Finish activity and go back to CheckoutActivity
+            finish();
         });
-
-    }
-
-    private void setupRecyclerView() {
-        recyclerViewCheckout.setLayoutManager(new LinearLayoutManager(this));
-        checkoutAdapter = new CheckoutAdapter(this, cartManager.getCartItems());
-        recyclerViewCheckout.setAdapter(checkoutAdapter);
-    }
-
-    private void loadCartItems() {
-        List<CartItem> cartItems = cartManager.getCartItems();
-        checkoutAdapter.setCartItems(cartItems);
-    }
-
-    private String getPaymentMethod(int radioButtonId) {
-        if (radioButtonId == R.id.paymentCreditCard) {
-            return "credit_card";
-        } else if (radioButtonId == R.id.paymentCashOnDelivery) {
-            return "cash_on_delivery";
-        }
-        return "";
-    }
-
-    private void processPayment(double totalPrice, String paymentMethod) {
-        // Lấy danh sách sản phẩm trong giỏ hàng
-        List<CartItem> cartItems = cartManager.getCartItems();
-
-        // Tạo đơn hàng
-        Order order = new Order(cartItems, totalPrice, paymentMethod, "Completed");
-
-        // Lưu đơn hàng vào cơ sở dữ liệu
-        cartManager.saveOrder(order);
-
-        // Thông báo cho người dùng
-        Toast.makeText(this, "Payment processed successfully!", Toast.LENGTH_SHORT).show();
-
-        // Xóa giỏ hàng sau khi thanh toán thành công
-        cartManager.clearCart();
-        finish();
     }
 }
+

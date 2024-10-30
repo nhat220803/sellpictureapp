@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sellpicture"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.User.ZaloPaymentNotification"
+            android:exported="true" />
         <activity
             android:name=".activity.User.SignupActivity"
             android:exported="false" />
@@ -28,13 +33,50 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.User.ProductList"></activity>
-        <activity android:name=".activity.User.ProductDetail"></activity>
-        <activity android:name=".activity.User.CartActivity"></activity>
-        <activity android:name=".activity.User.PaymentActivity"></activity>
-        <activity android:name=".activity.Admin.AddProductActivity"></activity>
+        <activity
+            android:name=".activity.User.ProductList"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".activity.User.ProductDetail"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".activity.User.CartActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".activity.User.CheckoutActivity"
+            android:exported="true"
+            android:label="Merchant Demo"
+            android:launchMode="singleTask">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="app"
+                    android:scheme="demozpdk" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".activity.Admin.AdminDashboardActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".activity.Admin.AddProductActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".activity.User.PaymentActivity"
+            android:exported="false">
+        </activity>
     </application>
-
-
 
 </manifest>
