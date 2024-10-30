@@ -1,6 +1,12 @@
 
 package com.example.sellpicture.activity.User;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +28,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import com.example.sellpicture.activity.Admin.AddProductActivity;
 import com.example.sellpicture.activity.Admin.AdminDashboardActivity;
 import com.example.sellpicture.context.CreateDatabase;
 import com.example.sellpicture.R;
@@ -34,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private int userId;
 
     private CheckBox cbRememberMe;
-    private SharedPreferences sharedPreferences;
 
 
     @Override
@@ -135,11 +141,9 @@ public class LoginActivity extends AppCompatActivity {
 //            Intent intent = new Intent(LoginActivity.this, ProductDetail.class);
 
             // Kiểm tra giỏ hàng và hiển thị thông báo nếu có sản phẩm
-            checkCartAndNotify();
+            checkCartAndNotify(userId);
 
             Intent intent2 = new Intent(LoginActivity.this, ProductList.class);
-            String role = checkUserRole(username); // Kiểm tra vai trò
-
             // Lưu trạng thái đăng nhập vào SharedPreferences
             saveLoginState(userId, username, role);
 
@@ -147,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent;
             Intent intent1;
             if ("Admin".equals(role)) {
-                intent1 = new Intent(LoginActivity.this, AddProductActivity.class); // Thay thế bằng activity dành cho admin
+                intent = new Intent(LoginActivity.this, AddProductActivity.class); // Thay thế bằng activity dành cho admin
             } else {
                 intent1 = new Intent(LoginActivity.this, ProductList.class);
             }
@@ -177,9 +181,9 @@ public class LoginActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void checkCartAndNotify() {
-        int cartProductCount = getCartProductCount(); // Lấy số lượng sản phẩm trong giỏ hàng
-        Log.d("CartNotification", "Số lượng sản phẩm trong giỏ hàng: " + cartProductCount); // Ghi log số lượng sản phẩm
+    private void checkCartAndNotify(int userID) {
+        int cartProductCount = getCartProductCount(userID); // Lấy số lượng sản phẩm trong giỏ hàng
+        Log.d("CartNotification", "Số lượng sản phẩm trong giỏ hàng: " + userID + "," + cartProductCount); // Ghi log số lượng sản phẩm
 
         if (cartProductCount > 0) {
             // Tạo đối tượng Notification
@@ -193,6 +197,8 @@ public class LoginActivity extends AppCompatActivity {
             // Tạo Intent để mở CartActivity
             Intent intent = new Intent(this, CartActivity.class);
             intent.putExtra("cart_count", cartProductCount); // Nếu cần gửi thêm dữ liệu
+            intent.putExtra("user_id", userId); // Truyền user_id vào intent
+
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             builder.setContentIntent(pendingIntent);
 
@@ -210,14 +216,18 @@ public class LoginActivity extends AppCompatActivity {
 
 
     // Phương thức để lấy số lượng sản phẩm trong giỏ hàng
-    private int getCartProductCount() {
+    private int getCartProductCount(int userId) {
         int quantity = 0;
         SQLiteDatabase db = createDatabase.open();
         Cursor cursor = null;
 
         try {
             // Truy vấn để lấy tổng số lượng sản phẩm từ bảng cart_items
-            cursor = db.rawQuery("SELECT SUM(quantity) FROM cart_items WHERE cart_item_id IS NOT NULL", null);
+            String query = "SELECT SUM(ci.quantity) " +
+                    "FROM cart_items ci " +
+                    "JOIN cart c ON ci.cart_id = c.cart_id " +
+                    "WHERE c.user_id = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
 
             if (cursor != null && cursor.moveToFirst()) {
                 quantity = cursor.getInt(0); // Lấy tổng số lượng sản phẩm

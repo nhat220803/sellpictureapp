@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -15,24 +19,45 @@
         tools:targetApi="31">
         <activity
             android:name=".activity.User.SignupActivity"
-            android:exported="false" />
+            android:exported="true" />
+        <activity android:name=".activity.User.ChatActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.User.MapActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.User.SupportChatActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.User.PaymentActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.User.UserProfileActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.User.ProductList"
+            android:exported="true"/>
+        <activity android:name=".activity.User.ProductDetail"
+            android:exported="true"/>
+        <activity android:name=".activity.User.CheckoutActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.Admin.AdminDashboardActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.Admin.ManageUsersActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.Admin.AddProductActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.User.CartActivity"
+            android:exported="true"/>
         <activity
             android:name=".activity.User.LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".activity.User.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.User.ProductList"></activity>
-        <activity android:name=".activity.User.ProductDetail"></activity>
-        <activity android:name=".activity.User.CartActivity"></activity>
-        <activity android:name=".activity.User.PaymentActivity"></activity>
-        <activity android:name=".activity.Admin.AddProductActivity"></activity>
+
     </application>
 
 

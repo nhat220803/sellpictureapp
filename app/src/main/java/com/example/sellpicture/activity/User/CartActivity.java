@@ -83,7 +83,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
                 startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                // startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
+                 startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
                 return true;
             } else if (itemId == R.id.nav_more) {
                 showMoreOptions(); // Hiển thị thêm tùy chọn
@@ -102,11 +102,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
 
         popup.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.phone_shop) {
-                // Xử lý khi chọn Phone Shop
                 Toast.makeText(this, "Phone Shop được chọn", Toast.LENGTH_SHORT).show();
                 return true;
             } else if (item.getItemId() == R.id.shop_location) {
-                // Xử lý khi chọn Shop Location
                 startActivity(new Intent(this, MapActivity.class));
             }else if (item.getItemId() == R.id.chat_with_shop){
                        startActivity(new Intent(this, ChatActivity.class));
