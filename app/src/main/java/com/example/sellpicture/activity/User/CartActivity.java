@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sellpicture.R;
 import com.example.sellpicture.adapter.CartAdapter;
 import com.example.sellpicture.model.CartItem;
-import com.example.sellpicture.util.CartManager;
+import com.example.sellpicture.DAO.CartManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
@@ -67,7 +66,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartI
                 intent.putExtra("userId", userId); // Truyền userId sang PaymentActivity
                 startActivity(intent);
             } else {
-                Toast.makeText(this, "Giỏ hàng trống. Vui lòng thêm sản phẩm.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Empty cart, please add some products", Toast.LENGTH_SHORT).show();
             }
         });
 

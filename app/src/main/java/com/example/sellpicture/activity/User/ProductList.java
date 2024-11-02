@@ -104,7 +104,7 @@ public class ProductList extends AppCompatActivity {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("product_id")); // Dùng getColumnIndexOrThrow
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("product_id"));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow("product_name"));
                 String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow("price"));
@@ -117,7 +117,7 @@ public class ProductList extends AppCompatActivity {
 
             productAdapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(ProductList.this, "Không có sản phẩm nào!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProductList.this, "No products found", Toast.LENGTH_SHORT).show();
         }
 
         if (cursor != null) {

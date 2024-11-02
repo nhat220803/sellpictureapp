@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = etPassword.getText().toString().trim();
 
             if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(LoginActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Please enter complete information", Toast.LENGTH_SHORT).show();
             } else {
                 login(username, password);
             }
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         Cursor cursor = db.rawQuery(sql, new String[]{username, password});
 
         if (cursor != null && cursor.moveToFirst()) {
-            Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
             int userId = cursor.getInt(cursor.getColumnIndexOrThrow(CreateDatabase.TB_users_user_id));
             String role = checkUserRole(userId);
 
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(LoginActivity.this, "Tên người dùng hoặc mật khẩu không đúng.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "username or password is incorrect", Toast.LENGTH_SHORT).show();
         }
 
         if (cursor != null) {
@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
 //
 //        Intent intent;
 //        if ("Admin".equals(role)) {
-//            intent = new Intent(LoginActivity.this, AddProductActivity.class);
+//            intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
 //        } else {
 //            intent = new Intent(LoginActivity.this, ProductList.class);
 //        }

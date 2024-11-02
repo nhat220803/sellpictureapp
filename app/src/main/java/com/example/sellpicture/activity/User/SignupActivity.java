@@ -49,12 +49,12 @@ public class SignupActivity extends AppCompatActivity {
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
         if (username.isEmpty() || password.isEmpty() || email.isEmpty() || fullName.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            Toast.makeText(this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -68,12 +68,12 @@ public class SignupActivity extends AppCompatActivity {
 
         long newRowId = db.insert(CreateDatabase.TB_users, null, values);
         if (newRowId != -1) {
-            Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Signup successful", Toast.LENGTH_SHORT).show();
             // Có thể chuyển hướng đến trang đăng nhập
             // startActivity(new Intent(SignupActivity.this, LoginActivity.class));
             // finish();
         } else {
-            Toast.makeText(this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Signup failed", Toast.LENGTH_SHORT).show();
         }
     }
 }

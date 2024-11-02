@@ -15,9 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sellpicture"
         tools:targetApi="31">
-        <activity
-            android:name=".activity.User.ZaloPaymentNotification"
-            android:exported="true" />
+
         <activity
             android:name=".activity.User.SignupActivity"
             android:exported="false" />
@@ -35,48 +33,40 @@
         </activity>
         <activity
             android:name=".activity.User.ProductList"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".activity.User.ProductDetail"
-            android:exported="false">
+            android:exported="false"></activity>
+        <activity
+            android:name=".activity.User.CheckoutActivity"
+            android:exported="true">
         </activity>
+
         <activity
             android:name=".activity.User.CartActivity"
             android:exported="false">
+
         </activity>
-
-        <activity
-            android:name=".activity.User.CheckoutActivity"
-            android:exported="true"
-            android:label="Merchant Demo"
-            android:launchMode="singleTask">
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:host="app"
-                    android:scheme="demozpdk" />
-            </intent-filter>
-        </activity>
-
-
         <activity
             android:name=".activity.Admin.AdminDashboardActivity"
             android:exported="false">
-        </activity>
 
+        </activity>
+        <activity
+            android:name=".activity.Admin.ManageUsersActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".activity.Admin.ManageProductActivity"
+            android:exported="false"></activity>
         <activity
             android:name=".activity.Admin.AddProductActivity"
-            android:exported="false">
-        </activity>
-
+            android:exported="false"></activity>
         <activity
             android:name=".activity.User.PaymentActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
+        <activity
+            android:name=".activity.Admin.AddUserActivity"
+            android:exported="false"></activity>
     </application>
 
 </manifest>

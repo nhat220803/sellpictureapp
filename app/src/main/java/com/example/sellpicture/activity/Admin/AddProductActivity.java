@@ -39,9 +39,9 @@ public class AddProductActivity extends AppCompatActivity {
             public void onClick(View v) {
                 addnewProduct();
             }
-
         });
     }
+
 
     private void addnewProduct() {
         String productName = etProductName.getText().toString().trim();
@@ -69,9 +69,7 @@ public class AddProductActivity extends AppCompatActivity {
         long newRowId = db.insert(CreateDatabase.TB_products, null, value);
         if (newRowId != -1) {
             Toast.makeText(this, "add Successful", Toast.LENGTH_SHORT).show();
-            // Chuyển hướng đến trang đăng nhập hoặc trang chính
-//            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-//            finish();
+
         } else {
             Toast.makeText(this, "add Failed", Toast.LENGTH_SHORT).show();
         }

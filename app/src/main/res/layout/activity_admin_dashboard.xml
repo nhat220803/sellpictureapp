@@ -26,22 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnManageUsers"
         android:layout_marginTop="10dp"
-        android:text="Add new Products" />
-
-    <Button
-        android:id="@+id/btnViewOrders"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnManageProducts"
-        android:layout_marginTop="10dp"
-        android:text="View Orders" />
-
-    <Button
-        android:id="@+id/btnViewPayments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnViewOrders"
-        android:layout_marginTop="10dp"
-        android:text="View Payments" />
+        android:text="Manage Products" />
 
 </RelativeLayout>
