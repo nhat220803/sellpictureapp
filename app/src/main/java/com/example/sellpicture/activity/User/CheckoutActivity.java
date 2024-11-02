@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -17,9 +18,10 @@ import com.example.sellpicture.R;
 import com.example.sellpicture.adapter.CheckoutAdapter;
 import com.example.sellpicture.model.CartItem;
 import com.example.sellpicture.model.Order;
-import com.example.sellpicture.util.CartManager;
+import com.example.sellpicture.DAO.CartManager;
 
 import java.util.List;
+
 
 public class CheckoutActivity extends AppCompatActivity {
     private RecyclerView recyclerViewCheckout;
@@ -72,9 +74,19 @@ public class CheckoutActivity extends AppCompatActivity {
                 Toast.makeText(CheckoutActivity.this, "Please select a payment method", Toast.LENGTH_SHORT).show();
                 return;
             }
+
             String paymentMethod = getPaymentMethod(selectedPaymentMethodId);
-            processPayment(userId, totalPrice, paymentMethod); // Thêm userId vào hàm xử lý thanh toán
+            if (paymentMethod.equals("cash_on_delivery")) {
+                // Chuyển sang PaymentActivity nếu chọn Cash on Delivery
+                Intent paymentIntent = new Intent(CheckoutActivity.this, PaymentActivity.class);
+                paymentIntent.putExtra("totalPrice", totalPrice); // Gửi tổng số tiền sang PaymentActivity
+                startActivity(paymentIntent);
+            } else {
+                // Xử lý thanh toán trực tiếp cho các phương thức khác
+                processPayment(userId, totalPrice, paymentMethod);
+            }
         });
+
     }
 
     private void setupRecyclerView() {
@@ -86,7 +98,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private void loadCartItems(int userId) {
         List<CartItem> cartItems = cartManager.getCartItemsByUserId(userId); // Sử dụng userId
         if (cartItems.isEmpty()) {
-            Toast.makeText(this, "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Empty cart", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -94,20 +106,19 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private String getPaymentMethod(int radioButtonId) {
-        if (radioButtonId == R.id.paymentZalo) {
-            return "Payment with ZaloPay";
-        } else if (radioButtonId == R.id.paymentCashOnDelivery) {
+        if (radioButtonId == R.id.paymentCashOnDelivery) {
             return "cash_on_delivery";
         }
         return "";
     }
+
 
     private void processPayment(int userId, double totalPrice, String paymentMethod) {
         // Lấy danh sách sản phẩm trong giỏ hàng của người dùng
         List<CartItem> cartItems = cartManager.getCartItemsByUserId(userId);
 
         if (cartItems.isEmpty()) {
-            Toast.makeText(this, "Giỏ hàng trống, không thể thực hiện thanh toán!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Empty cart, can't process payment", Toast.LENGTH_SHORT).show();
             return;
         }
 

@@ -1,4 +1,4 @@
-package com.example.sellpicture.util;
+package com.example.sellpicture.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;

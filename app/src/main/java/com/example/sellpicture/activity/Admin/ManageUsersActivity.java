@@ -1,11 +1,12 @@
 package com.example.sellpicture.activity.Admin;
 
-
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,47 +23,86 @@ public class ManageUsersActivity extends AppCompatActivity {
     private RecyclerView recyclerViewUsers;
     private UserAdapter userAdapter;
     private List<User> userList;
-    private CreateDatabase database;
+    private CreateDatabase createDatabase;
     private ImageButton btnAddUser;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_users);
 
-        // Initialize database
-        database = new CreateDatabase(this);
-
-        // Initialize views
         recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
-        btnAddUser = findViewById(R.id.btnAddUser);
-
-        // Setup RecyclerView
-        userList = new ArrayList<>();
-        userAdapter = new UserAdapter(this, userList);
         recyclerViewUsers.setLayoutManager(new LinearLayoutManager(this));
+
+        btnAddUser = findViewById(R.id.btnAddUser);
+        btnAddUser.setOnClickListener(v -> {
+            Intent intent = new Intent(ManageUsersActivity.this, AddUserActivity.class);
+            startActivity(intent);
+        });
+
+
+        userList = new ArrayList<>();
+        userAdapter = new UserAdapter(this, userList, (userId, position) -> {
+            deleteUserById(userId, position);
+        });
         recyclerViewUsers.setAdapter(userAdapter);
 
-        // Load users
-        loadUsers();
+        createDatabase = new CreateDatabase(this);
 
-        // Add user button click listener
-        btnAddUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Start AddUserActivity
-                // Intent intent = new Intent(UserManagementActivity.this, AddUserActivity.class);
-                // startActivity(intent);
-                Toast.makeText(ManageUsersActivity.this, "Add User clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        loadUsersListFromDatabase();
     }
 
-    private void loadUsers() {
-        // TODO: Implement database query to load users
-        // Example dummy data
-        userList.add(new User(1, "John Doe", "john@example.com", "1234567890", "john_doe", "password123", 1, null));
-        userList.add(new User(2, "Jane Smith", "jane@example.com", "0987654321", "jane_smith", "password456", 2, null));
-        userAdapter.notifyDataSetChanged();
+
+
+    private void deleteUserById(int userId, int position) {
+        SQLiteDatabase db = createDatabase.getWritableDatabase();
+
+        // Xóa người dùng bằng user_id
+        int rowsDeleted = db.delete(CreateDatabase.TB_users, "user_id = ?", new String[]{String.valueOf(userId)});
+
+        if (rowsDeleted > 0) {
+            userList.remove(position);
+            userAdapter.notifyItemRemoved(position);
+            Toast.makeText(this, "User deleted successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "User deletion failed", Toast.LENGTH_SHORT).show();
+        }
     }
+
+
+
+    private void loadUsersListFromDatabase() {
+        SQLiteDatabase db = createDatabase.open();
+        String query = "SELECT " + CreateDatabase.TB_users_full_name + ", " + CreateDatabase.TB_users_email + ", " + CreateDatabase.TB_users_phone + ", " +CreateDatabase.TB_users_user_id + " FROM " + CreateDatabase.TB_users;
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        if(cursor != null && cursor.moveToFirst()){
+            do{
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("user_id"));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("full_name"));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                String phone = cursor.getString(cursor.getColumnIndexOrThrow("phone"));
+
+                User user = new User(id,name,email,phone);
+                userList.add(user);
+            }while(cursor.moveToNext());
+
+            userAdapter.notifyDataSetChanged();
+        }else{
+            Toast.makeText(ManageUsersActivity.this,"No users found",Toast.LENGTH_SHORT);
+        }
+
+        if(cursor != null){
+            cursor.close();
+        }
+        db.close();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userList.clear();
+        loadUsersListFromDatabase();
+    }
+
 }

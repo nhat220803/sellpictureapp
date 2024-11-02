@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,12 +16,18 @@ import com.example.sellpicture.model.User;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
-    private Context context;
     private List<User> userList;
+    private Context context;
+    private OnUserDeleteListener deleteListener;
 
-    public UserAdapter(Context context, List<User> userList) {
+    public interface OnUserDeleteListener {
+        void onUserDelete(int userId,int position);
+    }
+
+    public UserAdapter(Context context, List<User> userList,OnUserDeleteListener deleteListener) {
         this.context = context;
         this.userList = userList;
+        this.deleteListener = deleteListener;
     }
 
     @NonNull
@@ -36,18 +40,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
-
-        holder.textViewName.setText(user.getFullName());
+        holder.textViewName.setText(user.getName());
         holder.textViewEmail.setText(user.getEmail());
         holder.textViewPhone.setText(user.getPhone());
-
-        holder.btnDeleteUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Implement delete user functionality
-                Toast.makeText(context, "Delete user: " + user.getFullName(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        holder.btnDeleteUser.setOnClickListener(v -> deleteListener.onUserDelete(user.getUser_id(), position));
     }
 
     @Override
@@ -55,7 +51,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return userList.size();
     }
 
-    public class UserViewHolder extends RecyclerView.ViewHolder {
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName, textViewEmail, textViewPhone;
         ImageButton btnDeleteUser;
 
@@ -68,4 +64,5 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
     }
 }
+
 

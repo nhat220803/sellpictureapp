@@ -17,6 +17,14 @@ public class Product {
         this.image = image; // Gán giá trị cho thuộc tính image
     }
 
+    public Product(int id, String name, double price, int stockQuantity, String image) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.image = image;
+    }
+
     public int getId() {
         return id;
     }

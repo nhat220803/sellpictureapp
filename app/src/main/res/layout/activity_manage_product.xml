@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvManageProducts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manage Products"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/btnAddProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvManageProducts"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="-38dp"
+        android:layout_toEndOf="@+id/tvManageProducts"
+        android:contentDescription="Add Product"
+        android:src="@drawable/baseline_assignment_add_24" />
+
+    <ImageButton
+        android:id="@+id/btnRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvManageProducts"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="-38dp"
+        android:layout_toEndOf="@id/btnAddProduct"
+        android:contentDescription="Refresh"
+        android:src="@drawable/baseline_refresh_24" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewProducts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btnAddProduct"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"/>
+</RelativeLayout>

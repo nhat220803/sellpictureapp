@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -22,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.sellpicture.context.CreateDatabase;
 import com.example.sellpicture.R;
 import com.example.sellpicture.model.Product;
-import com.example.sellpicture.util.CartManager;
+import com.example.sellpicture.DAO.CartManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProductDetail extends AppCompatActivity {
@@ -133,7 +132,7 @@ public class ProductDetail extends AppCompatActivity {
 
     private void addToCart(int userId, int productId) {
         cartManager.addToCart(userId, productId, 1); // Thêm 1 sản phẩm vào giỏ hàng cho userId
-        Toast.makeText(this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Product has been added to cart", Toast.LENGTH_SHORT).show();
     }
 
     private void loadProductDetails(int productId) {
