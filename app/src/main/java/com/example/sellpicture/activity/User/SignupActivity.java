@@ -56,6 +56,16 @@ public class SignupActivity extends AppCompatActivity {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
         }
+        // Kiểm tra định dạng email
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Email không hợp lệ", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // Kiểm tra độ dài mật khẩu
+        if (password.length() < 8) {
+            Toast.makeText(this, "Mật khẩu phải có ít nhất 8 ký tự", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
