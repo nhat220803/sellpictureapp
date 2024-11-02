@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/phone_shop"
+        android:title="Phone Shop" />
+    <item
+        android:id="@+id/shop_location"
+        android:title="Shop Location" />
+    <item
+        android:id="@+id/chat_with_shop"
+        android:title="Chat with Shop" />
+    <item
+        android:id="@+id/support_chat"
+        android:title="Support Chat Automatically" />
+
+
+</menu>

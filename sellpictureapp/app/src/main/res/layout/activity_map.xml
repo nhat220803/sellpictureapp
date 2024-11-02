@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.User.MapActivity">
+
+    <!-- Tên shop bán tranh -->
+    <TextView
+        android:id="@+id/shop_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Sellpicture"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <!-- Mô tả shop -->
+    <TextView
+        android:id="@+id/shop_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Chuyên bán các loại tranh nghệ thuật và tranh phong thủy."
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="10dp" />
+    <TextView
+        android:id="@+id/shop_descriptio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Liên Hệ: 1900 1002 7762"
+
+        android:textSize="15sp"
+        android:gravity="center"
+        android:padding="5dp" />
+
+    <!-- Bản đồ Google -->
+    <fragment
+        android:id="@+id/id_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

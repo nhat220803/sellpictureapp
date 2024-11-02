@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    tools:context=".activity.User.ChatActivity">
+
+
+    <!-- TextView để hiển thị trạng thái server -->
+    <TextView
+        android:id="@+id/SellPictureShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ChatWithShop"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+    <!-- TextView để hiển thị tin nhắn -->
+    <TextView
+        android:id="@+id/tvMessages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_below="@+id/SellPictureShop"
+        android:layout_above="@+id/etMessage"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+    <!-- EditText để nhập tin nhắn -->
+    <EditText
+        android:id="@+id/etMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSend"
+        android:hint="Enter Message"
+        android:inputType="text" />
+
+    <!-- Nút Clear để xóa lịch sử tin nhắn -->
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etMessage"
+        android:text="CLEAR" />
+
+    <!-- Nút gửi tin nhắn -->
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="SEND" />
+    <include
+        layout="@layout/activity_menu"
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
