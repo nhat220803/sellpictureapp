@@ -28,6 +28,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.sellpicture.R;
 import com.example.sellpicture.activity.Admin.AddProductActivity;
+import com.example.sellpicture.activity.Admin.AdminDashboardActivity;
 import com.example.sellpicture.context.CreateDatabase;
 
 public class LoginActivity extends AppCompatActivity {
@@ -150,7 +151,6 @@ public class LoginActivity extends AppCompatActivity {
             // Kiểm tra giỏ hàng và hiển thị thông báo nếu có sản phẩm
             checkCartAndNotify(userId);
 
-            Intent intent2 = new Intent(LoginActivity.this, ProductList.class);
             // Lưu trạng thái đăng nhập vào SharedPreferences
             saveLoginState(userId, username, role);
 
@@ -158,11 +158,13 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent;
             Intent intent1;
             if ("Admin".equals(role)) {
-                intent = new Intent(LoginActivity.this, AddProductActivity.class); // Thay thế bằng activity dành cho admin
+                intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);// Thay thế bằng activity dành cho admin
+                startActivity(intent);
             } else {
                 intent1 = new Intent(LoginActivity.this, ProductList.class);
+                startActivity(intent1);
             }
-            startActivity(intent2);
+
             finish();
         } else {
             Toast.makeText(LoginActivity.this, "Tên người dùng hoặc mật khẩu không đúng.", Toast.LENGTH_SHORT).show();

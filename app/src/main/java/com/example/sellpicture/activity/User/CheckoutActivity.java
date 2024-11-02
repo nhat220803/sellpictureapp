@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.example.sellpicture.adapter.CheckoutAdapter;
 import com.example.sellpicture.model.CartItem;
 import com.example.sellpicture.model.Order;
 import com.example.sellpicture.DAO.CartManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -87,8 +89,53 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         });
 
-    }
+        // Thêm xử lý cho BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
 
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(this, ProductList.class)); // Chuyển về màn hình danh sách sản phẩm
+                return true;
+
+            } else if (itemId == R.id.nav_cart) {
+                startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
+                return true;
+            } else if (itemId == R.id.nav_more) {
+                showMoreOptions(); // Hiển thị thêm tùy chọn
+                return true;
+            }
+
+            return false;
+        });
+
+    }
+    private void showMoreOptions() {
+        PopupMenu popup = new PopupMenu(this, findViewById(R.id.nav_more));
+        popup.getMenuInflater().inflate(R.menu.more_options_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.phone_shop) {
+                // Xử lý khi chọn Phone Shop
+                Toast.makeText(this, "Phone Shop được chọn", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (item.getItemId() == R.id.shop_location) {
+                // Xử lý khi chọn Shop Location
+                startActivity(new Intent(this, MapActivity.class));
+            } else if (item.getItemId() == R.id.chat_with_shop){
+                startActivity(new Intent(this, ChatActivity.class));
+
+            }else if (item.getItemId() == R.id.support_chat ) {
+                startActivity(new Intent(this,SupportChatActivity.class));
+            }
+            return false;
+        });
+
+        popup.show();
+    }
     private void setupRecyclerView() {
         recyclerViewCheckout.setLayoutManager(new LinearLayoutManager(this));
         checkoutAdapter = new CheckoutAdapter(this, cartManager.getCartItemsByUserId(userId)); // Sử dụng userId

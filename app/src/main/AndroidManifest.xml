@@ -44,6 +44,11 @@
             android:exported="true"/>
         <activity android:name=".activity.User.CartActivity"
             android:exported="true"/>
+        <activity android:name=".activity.Admin.AddUserActivity"
+            android:exported="true"/>
+        <activity android:name=".activity.Admin.ManageProductActivity"
+            android:exported="true"/>
+
         <activity
             android:name=".activity.User.LoginActivity"
             android:exported="true">

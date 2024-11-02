@@ -165,9 +165,9 @@ public class UserProfileActivity extends AppCompatActivity {
         // Bạn có thể trả về tên của vai trò dựa trên role_id
         switch (roleId) {
             case 1:
-                return "Admin";
-            case 2:
                 return "User";
+            case 2:
+                return "Admin";
             default:
                 return "Unknown";
         }
