@@ -118,11 +118,8 @@ public class CheckoutActivity extends AppCompatActivity {
         popup.getMenuInflater().inflate(R.menu.more_options_menu, popup.getMenu());
 
         popup.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.phone_shop) {
-                // Xử lý khi chọn Phone Shop
-                Toast.makeText(this, "Phone Shop được chọn", Toast.LENGTH_SHORT).show();
-                return true;
-            } else if (item.getItemId() == R.id.shop_location) {
+
+            if (item.getItemId() == R.id.shop_location) {
                 // Xử lý khi chọn Shop Location
                 startActivity(new Intent(this, MapActivity.class));
             } else if (item.getItemId() == R.id.chat_with_shop){
@@ -130,6 +127,9 @@ public class CheckoutActivity extends AppCompatActivity {
 
             }else if (item.getItemId() == R.id.support_chat ) {
                 startActivity(new Intent(this,SupportChatActivity.class));
+            }
+            else if (item.getItemId() == R.id.call ) {
+                startActivity(new Intent(this, CallActivity.class));
             }
             return false;
         });

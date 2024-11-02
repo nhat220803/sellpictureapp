@@ -8,27 +8,26 @@
     android:orientation="vertical"
     tools:context=".activity.User.MapActivity">
 
-    <!-- Tên shop bán tranh -->
+    <!-- Mô tả shop -->
     <TextView
-        android:id="@+id/shop_name"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="146dp"
         android:gravity="center"
-        android:padding="5dp"
-        android:text="Sellpicture"
-        android:textSize="40sp"
+        android:padding="10dp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
-    <!-- Mô tả shop -->
     <TextView
         android:id="@+id/shop_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="10dp"
         android:text="Chuyên bán các loại tranh nghệ thuật và tranh phong thủy."
         android:textSize="20sp"
-        android:gravity="center"
-        android:padding="10dp" />
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/shop_descriptio"
         android:layout_width="match_parent"

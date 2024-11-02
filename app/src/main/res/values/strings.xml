@@ -6,6 +6,7 @@
     <string name="register">Register</string>
     <string name="cart">Cart</string>
     <string name="order">Order</string>
+    <string name="call">Call</string>
 
     <string-array name="role_array">
         <item>User</item>
