@@ -57,6 +57,30 @@ public class AddProductActivity extends AppCompatActivity {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // Kiểm tra xem các trường có bị trống không
+        if (TextUtils.isEmpty(productName) || TextUtils.isEmpty(description) || TextUtils.isEmpty(priceStr)
+                || TextUtils.isEmpty(stockQuantityStr) || TextUtils.isEmpty(categoryIdStr) || TextUtils.isEmpty(image)) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate category ID
+        String[] validCategories = {"1", "2", "3"}; // Assuming these are your valid category IDs
+        boolean isValidCategory = false;
+
+        for (String category : validCategories) {
+            if (categoryIdStr.equals(category)) {
+                isValidCategory = true;
+                break;
+            }
+        }
+
+        if (!isValidCategory) {
+            Toast.makeText(this, "Invalid category ID. Please choose a valid category.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         SQLiteDatabase db = createDatabase.open();
         ContentValues value = new ContentValues();
         value.put(CreateDatabase.TB_products_product_name,productName);
@@ -69,6 +93,7 @@ public class AddProductActivity extends AppCompatActivity {
         long newRowId = db.insert(CreateDatabase.TB_products, null, value);
         if (newRowId != -1) {
             Toast.makeText(this, "add Successful", Toast.LENGTH_SHORT).show();
+            finish();
 
         } else {
             Toast.makeText(this, "add Failed", Toast.LENGTH_SHORT).show();

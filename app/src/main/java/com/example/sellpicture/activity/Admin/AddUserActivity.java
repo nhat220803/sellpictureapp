@@ -3,9 +3,11 @@ package com.example.sellpicture.activity.Admin;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.sellpicture.R;
@@ -17,6 +19,8 @@ public class AddUserActivity extends AppCompatActivity {
     private EditText etUserName, etUserEmail, etUserPhone, etUseracc;
     private Button btnSaveUser;
     private CreateDatabase createDatabase;
+    private Spinner spinnerRole;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,8 @@ public class AddUserActivity extends AppCompatActivity {
         etUserPhone = findViewById(R.id.etUserPhone);
         etUseracc = findViewById(R.id.etUseracc);
         btnSaveUser = findViewById(R.id.btnSaveUser);
+        spinnerRole = findViewById(R.id.spinnerRole);
+
 
         createDatabase = new CreateDatabase(this);
 
@@ -52,10 +58,24 @@ public class AddUserActivity extends AppCompatActivity {
         String email = etUserEmail.getText().toString().trim();
         String phone = etUserPhone.getText().toString().trim();
         String acc = etUseracc.getText().toString().trim();
+        int role = spinnerRole.getSelectedItemPosition() + 1; // 1 for User, 2 for Admin
+
 
 
         if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || acc.isEmpty()) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate email format
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate phone format (e.g., 10 digits)
+        if (!phone.matches("\\d{10}")) {
+            Toast.makeText(this, "Please enter a valid 10-digit phone number", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -69,6 +89,8 @@ public class AddUserActivity extends AppCompatActivity {
         values.put("phone", phone);
         values.put("username",acc);
         values.put("password",defaultPassword);
+        values.put("role_id", role);  // Save role to the database
+
 
         long newRowId = db.insert(CreateDatabase.TB_users, null, values);
 
