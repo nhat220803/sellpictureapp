@@ -76,6 +76,7 @@ public class SignupActivity extends AppCompatActivity {
 
         long newRowId = db.insert(CreateDatabase.TB_users, null, values);
 
+
         if (newRowId != -1) {
             Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(SignupActivity.this, LoginActivity.class));
