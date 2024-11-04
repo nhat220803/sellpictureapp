@@ -76,14 +76,18 @@ public class ProductList extends AppCompatActivity {
     }
 
     @Override
+    // Thêm menu logout
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
+
         inflater.inflate(R.menu.option_logout, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
         if(item.getItemId() == R.id.action_logout){
             finishAffinity();
             startActivity(new Intent(this, LoginActivity.class));

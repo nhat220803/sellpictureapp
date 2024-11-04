@@ -97,7 +97,7 @@ public class SignupActivity extends AppCompatActivity {
         values.put(CreateDatabase.TB_users_full_name, fullName);
 
 // Đặt giá trị role_id là 1, giả sử 1 đại diện cho quyền của người dùng bình thường
-        values.put(CreateDatabase.TB_users_role_id, 2); // role_id = 2 cho người dùng bình thường
+        values.put(CreateDatabase.TB_users_role_id, 1); // role_id = 2 cho người dùng bình thường
 
 
         // Thực hiện truy vấn INSERT để thêm người dùng mới vào bảng users
