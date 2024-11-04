@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sellpicture.R;
+import com.example.sellpicture.activity.User.LoginActivity;
 import com.example.sellpicture.adapter.UserAdapter;
 import com.example.sellpicture.context.CreateDatabase;
 import com.example.sellpicture.model.User;
@@ -50,6 +54,22 @@ public class ManageUsersActivity extends AppCompatActivity {
         createDatabase = new CreateDatabase(this);
 
         loadUsersListFromDatabase();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.option_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_logout){
+            finishAffinity();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        return true;
     }
 
 

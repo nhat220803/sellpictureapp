@@ -31,12 +31,12 @@
         android:hint="Stock Quantity"
         android:inputType="number" />
 
-    <EditText
+    <Spinner
         android:id="@+id/etCategoryId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Category code"
-        android:inputType="number" />
+        android:hint="Category code"/>
+
 
     <EditText
         android:id="@+id/etImage"
@@ -50,30 +50,30 @@
         android:layout_height="wrap_content"
         android:text="Add Product" />
 
-    <!-- Category Information -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Category code:"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"/>
+<!--    &lt;!&ndash; Category Information &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Category code:"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginTop="16dp"/>-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1: Phong cảnh"
-        android:layout_marginStart="16dp" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="1: Phong cảnh"-->
+<!--        android:layout_marginStart="16dp" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2: Trừu tượng"
-        android:layout_marginStart="16dp" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="2: Trừu tượng"-->
+<!--        android:layout_marginStart="16dp" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3: Hiện đại"
-        android:layout_marginStart="16dp" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="3: Hiện đại"-->
+<!--        android:layout_marginStart="16dp" />-->
 
 </LinearLayout>

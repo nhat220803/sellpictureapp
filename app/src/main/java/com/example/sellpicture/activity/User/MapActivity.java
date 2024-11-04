@@ -2,6 +2,9 @@ package com.example.sellpicture.activity.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -32,6 +35,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.id_map);
         mapFragment.getMapAsync(this);
 
+        // Xử lý BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(this, ProductList.class)); // Chuyển về màn hình danh sách sản phẩm
+                return true;
+            } else if (itemId == R.id.nav_cart) {
+                startActivity(new Intent(this, CartActivity.class)); // Chuyển về CartActivity (sẽ thêm sau)
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity (sẽ thêm sau)
+                return true;
+            } else if (itemId == R.id.nav_more) {
+                showMoreOptions(); // Hiển thị thêm tùy chọn
+                return true;
+            }
+
+            return false;
+        });
+
+
+
         // Thêm xử lý cho BottomNavigationView
 //        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 //        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -55,6 +82,46 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //            return false;
 //        });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.option_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_logout){
+            finishAffinity();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        return true;
+    }
+
+    private void showMoreOptions() {
+        PopupMenu popup = new PopupMenu(this, findViewById(R.id.nav_more));
+        popup.getMenuInflater().inflate(R.menu.more_options_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(item -> {
+
+            if (item.getItemId() == R.id.shop_location) {
+                // Xử lý khi chọn Shop Location
+                startActivity(new Intent(this, MapActivity.class));
+            } else if (item.getItemId() == R.id.chat_with_shop){
+                startActivity(new Intent(this, ChatActivity.class));
+
+            }else if (item.getItemId() == R.id.support_chat ) {
+                startActivity(new Intent(this,SupportChatActivity.class));
+            }
+            else if (item.getItemId() == R.id.call ) {
+                startActivity(new Intent(this, CallActivity.class));
+            }
+            return false;
+        });
+
+        popup.show();
     }
 //    private void showMoreOptions() {
 //        PopupMenu popup = new PopupMenu(this, findViewById(R.id.nav_more));

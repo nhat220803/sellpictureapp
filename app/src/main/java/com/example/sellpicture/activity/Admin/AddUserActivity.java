@@ -1,9 +1,13 @@
 package com.example.sellpicture.activity.Admin;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.sellpicture.R;
+import com.example.sellpicture.activity.User.LoginActivity;
 import com.example.sellpicture.context.CreateDatabase;
 
 import java.util.Random;
@@ -38,6 +43,22 @@ public class AddUserActivity extends AppCompatActivity {
         createDatabase = new CreateDatabase(this);
 
         btnSaveUser.setOnClickListener(v -> saveUserToDatabase());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.option_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_logout){
+            finishAffinity();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        return true;
     }
 
 

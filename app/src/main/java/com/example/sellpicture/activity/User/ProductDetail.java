@@ -9,6 +9,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -124,6 +127,22 @@ public class ProductDetail extends AppCompatActivity {
         popup.show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.option_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_logout){
+            finishAffinity();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        return true;
+    }
+
     // Hàm để hiển thị thanh tìm kiếm
     private void showSearchBar() {
         // Xử lý hiển thị thanh tìm kiếm ở đây
@@ -152,9 +171,9 @@ public class ProductDetail extends AppCompatActivity {
 
             // Update UI with product details
             productName.setText(product.getName());
-            productDescription.setText(product.getDescription());
-            productPrice.setText(String.format("$%.2f", product.getPrice()));
-            productQuantity.setText(String.valueOf(product.getStockQuantity()));
+            productDescription.setText("Description: "+product.getDescription());
+            productPrice.setText("Price: "+String.format("$%.2f", product.getPrice()));
+            productQuantity.setText("Quantity: "+String.valueOf(product.getStockQuantity()));
 
             // Load image into ImageView using Glide
             Glide.with(this)
