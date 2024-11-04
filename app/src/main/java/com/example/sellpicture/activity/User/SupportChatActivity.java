@@ -78,15 +78,15 @@ public class SupportChatActivity extends AppCompatActivity {
         btnQuestion2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addMessage("Tôi muốn tham gia cộng đồng MSI", true);
-                addMessage("Tham gia tại: www.facebook.com/MSIGaming", false);
+                addMessage("Tôi muốn tham gia cộng đồng Tranh", true);
+                addMessage("Tham gia tại: www.facebook.com/tranh", false);
             }
         });
 
         btnQuestion3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addMessage("Địa chỉ trung tâm bảo hành laptop", true);
+                addMessage("Địa chỉ trung tâm bảo hành", true);
                 addMessage("Trung tâm bảo hành laptop tại: 123 Đường ABC, Thành phố XYZ.", false);
             }
         });
@@ -94,8 +94,8 @@ public class SupportChatActivity extends AppCompatActivity {
         btnQuestion4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addMessage("Địa chỉ trung tâm bảo hành linh kiện", true);
-                addMessage("Trung tâm bảo hành linh kiện tại: 456 Đường DEF, Thành phố UVW.", false);
+                addMessage("Địa chỉ trung tâm văn phòng", true);
+                addMessage("Trung tâm văn phòng tại: 456 Đường DEF, Thành phố UVW.", false);
             }
         });
 

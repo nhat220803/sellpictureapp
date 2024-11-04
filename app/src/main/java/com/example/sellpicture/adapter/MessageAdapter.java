@@ -54,12 +54,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 // Set giao diện cho tin nhắn của người dùng
                 messageTextView.setBackgroundResource(R.drawable.bg_user_message);
                 messageTextView.setText(message.getContent());
-                messageTextView.setGravity(View.TEXT_ALIGNMENT_TEXT_END);
             } else {
                 // Set giao diện cho tin nhắn từ bot/hệ thống
                 messageTextView.setBackgroundResource(R.drawable.bg_bot_message);
                 messageTextView.setText(message.getContent());
-                messageTextView.setGravity(View.TEXT_ALIGNMENT_TEXT_START);
             }
         }
     }

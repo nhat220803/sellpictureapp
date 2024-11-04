@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void checkNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 // Hiển thị AlertDialog yêu cầu người dùng mở thông báo
                 new AlertDialog.Builder(this)
@@ -205,8 +205,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // Tạo Intent để mở CartActivity
             Intent intent = new Intent(this, CartActivity.class);
-            intent.putExtra("cart_count", cartProductCount); // Nếu cần gửi thêm dữ liệu
-            intent.putExtra("user_id", userId); // Truyền user_id vào intent
+
 
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             builder.setContentIntent(pendingIntent);
@@ -218,7 +217,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Log.d("CartNotification", "Thông báo đã được gửi."); // Ghi log khi thông báo được gửi
         } else {
-            Log.d("CartNotification", "Không có sản phẩm trong giỏ hàng để hiển thị thông báo.");
+            Log.d("CartNotification", "Không có sản phẩm trong giỏ hàng.");
         }
     }
 

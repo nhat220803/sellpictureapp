@@ -39,19 +39,19 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        // Khởi tạo các thành phần giao diện
+
         etMessage = findViewById(R.id.etMessage);
         tvMessages = findViewById(R.id.tvMessages);
         btnSend = findViewById(R.id.btnSend);
         btnClear = findViewById(R.id.btnClear);
         executorService = Executors.newFixedThreadPool(2);
 
-        // Tự động kết nối với server khi khởi chạy ứng dụng
+        // connect with server
         connectWithServer();
 
         btnClear.setOnClickListener(v -> tvMessages.setText(""));
 
-        // Thêm xử lý cho BottomNavigationView
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
                  startActivity(new Intent(this, UserProfileActivity.class)); // Chuyển về UserProfileActivity
                 return true;
             } else if (itemId == R.id.nav_more) {
-                showMoreOptions(); // Hiển thị thêm tùy chọn
+                showMoreOptions();
                 return true;
             }
 
@@ -83,7 +83,7 @@ public class ChatActivity extends AppCompatActivity {
         popup.setOnMenuItemClickListener(item -> {
 
             if (item.getItemId() == R.id.shop_location) {
-                // Xử lý khi chọn Shop Location
+
                 startActivity(new Intent(this, MapActivity.class));
             } else if (item.getItemId() == R.id.chat_with_shop){
                 startActivity(new Intent(this, ChatActivity.class));
@@ -108,10 +108,10 @@ public class ChatActivity extends AppCompatActivity {
 
                 PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
 
-                // Lắng nghe tin nhắn từ server
+                // get message from server
                 getMessages(socket);
 
-                // Xử lý gửi tin nhắn
+                // event
                 btnSend.setOnClickListener(v -> {
                     String message = etMessage.getText().toString().trim();
                     if (!message.isEmpty()) {
@@ -123,7 +123,7 @@ public class ChatActivity extends AppCompatActivity {
                 });
 
             } catch (IOException e) {
-                // Hiển thị lỗi nếu kết nối thất bại
+                // If connect fail
                 String errorMessage = "Connection failed: " + e.getMessage();
                 runOnUiThread(() -> {
                     Toast.makeText(ChatActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
@@ -155,7 +155,7 @@ public class ChatActivity extends AppCompatActivity {
                     final String serverMessage = message;
                     // Cập nhật giao diện
                     runOnUiThread(() -> {
-                        tvMessages.append("Server: " + serverMessage + "\n");
+                        tvMessages.append("Admin: " + serverMessage + "\n");
                         Log.d("Client", "Received message: " + serverMessage); // Thêm log để kiểm tra
                     });
                 }
